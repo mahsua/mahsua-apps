@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apps ❤️ mahsua.com</title>
+    <link rel="icon" href="./favicon.png" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">Mahsua Apps</div>
+
+            <button class="hamburger" onclick="toggleMobileMenu()" style=" color: #ee508c; ">☰</button>
+            <ul class="nav-links" id="navMenu">
+                <li><a href="#apps">Apps</a></li>
+                <li><a href="https://games.mahsua.com/">Games</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Mahsua Apps</h1>
+            <p class="subtitle">Next-Generation Digital Experience Platform</p>
+            <p class="description">
+                Discover cutting-edge browser applications designed for the modern digital lifestyle. 
+                Experience seamless gaming and productivity tools with stunning visuals and intuitive design.
+            </p>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="apps">
+        <div class="container">
+            <h2 class="section-title">Apps</h2>
+            <div class="grid">
+                <!-- Age Calculator -->
+                <a href="./age-calculator/index.html" class="card tool">
+                    <div class="icon-box tool age-calculator"></div>
+                    <h3>Age Calculator</h3>
+                    <p>Calculate your exact age in years, months, and days with precision and detailed breakdown.</p>
+                </a>
+
+                <!-- Typing Speed Test -->
+                <a href="./typing-speed-test/index.html" class="card tool">
+                    <div class="icon-box tool typing-speed"></div>
+                    <h3>Typing Speed Test</h3>
+                    <p>Improve your typing accuracy and speed with this interactive test and detailed analytics.</p>
+                </a>
+
+                <!-- Modern Calculator -->
+                <a href="./modern-calculator/index.html" class="card tool">
+                    <div class="icon-box tool modern-calculator"></div>
+                    <h3>Modern Calculator</h3>
+                    <p>A sleek and functional calculator with advanced features for all your arithmetic needs.</p>
+                </a>
+
+                <!-- QR Code Generator -->
+                <a href="./qr-code-generator/index.html" class="card tool">
+                    <div class="icon-box tool qr-code"></div>
+                    <h3>QR Code Generator</h3>
+                    <p>Generate high-quality QR codes for URLs, text, and contact information with custom styling.</p>
+                </a>
+
+                <!-- QR Code Generator -->
+                <a href="./advanced-stopwatch/index.html" class="card tool">
+                    <div class="icon-box tool stop-watch"></div>
+                    <h3>Advanced Stopwatch</h3>
+                    <p>This stopwatch includes forward/reverse timing, lap functionality, and a beautiful light/dark mode interface.</p>
+                </a>
+
+                <!-- Password Generator -->
+                <a href="./password-generator/index.html" class="card tool">
+                    <div class="icon-box tool password-generator"></div>
+                    <h3>Password Generator</h3>
+                    <p>Generate passwords from 8 to 20 characters, Choose from uppercase letters, lowercase letters, numbers, and symbols.</p>
+                </a>
+
+                <!-- Invoice Generator -->
+                <a href="./invoice/index.html" class="card tool">
+                    <div class="icon-box tool invoice-generator"></div>
+                    <h3>Invoice Generator</h3>
+                    <p>Create professional invoices quickly and easily with customizable templates and branding.</p>
+                </a>
+
+                <!-- Resume Builder -->
+                <a href="./resume-builder/index.html" class="card tool">
+                    <div class="icon-box tool resume-builder"></div>
+                    <h3>Resume Builder</h3>
+                    <p>Create professional resumes effortlessly with modern templates and real-time preview.</p>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Mahsua Apps</h2>
+            <div class="about-content">
+                <p>Mahsua Apps represents the future of digital experiences - a dynamic and evolving platform dedicated to creating open-source, browser-friendly applications that support learning, productivity, and skill development. Built with accessibility, simplicity, and inclusivity at its core, we empower users by providing cutting-edge digital tools that require no installations, work seamlessly across all modern devices, and are completely free to use.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <p class="contact-info">Have questions, suggestions, or need support? We'd love to hear from you! Reach out through any of the channels below.</p>
+                
+                <div class="contact-grid">
+                    <!-- Email Card -->
+                    <div class="contact-card email">
+                        <div class="contact-icon email">📧</div>
+                        <h3>Email Support</h3>
+                        <p class="contact-info">Get in touch for support, feedback, or collaboration opportunities.</p>
+                        <a href="mailto:games@mahsua.com" class="contact-link">games@mahsua.com</a>
+                    </div>
+
+                    <!-- WhatsApp Card -->
+                    <div class="contact-card whatsapp">
+                        <div class="contact-icon whatsapp">💬</div>
+                        <h3>WhatsApp Chat</h3>
+                        <p class="contact-info">Quick support and instant responses for urgent queries.</p>
+                        <a href="https://wa.me/919752107808" class="contact-link whatsapp-link" target="_blank">+91 9752107808</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Made With ❤️ INDIA ~ Designed by <a href="./developer-profile/index.html"> SHIVAM KUSHWAHA </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+<!-- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96332e0834b93d25',t:'MTc1MzE4OTg0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body> -->
+</html>
