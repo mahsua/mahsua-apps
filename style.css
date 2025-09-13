@@ -689,7 +689,7 @@ html {
     animation: glow 2s ease-in-out infinite alternate;
 }
 .hamburger {
-    /* display: none; */
+    display: none;
     font-size: 2rem;
     background: none;
     border: none;
