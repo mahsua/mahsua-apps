@@ -3,455 +3,707 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahsua Games</title>
-    <!-- Tailwind CSS CDN -->
+    <title>M Typing Test</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for icons (e.g., sun/moon) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <!-- Google Ads -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-9351361840615541">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T3YBTXHNJY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-T3YBTXHNJY');
-    </script>    <style>
-        /* Custom styles for better visual feedback and dark mode */
+    <style>
+        /* Custom animation for modal */
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-zoom-in {
+            animation: zoomIn 0.2s ease-out forwards;
+        }
+        /* Custom font for certificate consistency */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body {
-            font-family: 'Inter', sans-serif; /* Using Inter font */
-            transition: background-color 0.3s, color 0.3s;
+            font-family: 'Inter', sans-serif;
         }
-
-        .dark body {
-            background-color: #1a202c; /* Dark background */
-            color: #e2e8f0; /* Light text */
+        
+        /* Custom Scrollbar for Typing Area */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
         }
-
-        .text-to-type span {
-            transition: background-color 0.1s;
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+            border-radius: 8px;
         }
-
-        .text-to-type .correct {
-            color: #22c55e; /* Green for correct */
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 8px;
         }
-
-        .text-to-type .incorrect {
-            color: #ef4444; /* Red for incorrect */
-            background-color: #fee2e2; /* Light red background for incorrect */
-            border-radius: 4px;
-        }
-
-        .dark .text-to-type .incorrect {
-            background-color: #fee2e2; /* Darker red background for incorrect in dark mode */
-        }
-
-        .text-to-type .current {
-            background-color: #bfdbfe; /* Blue highlight for current character */
-            border-radius: 4px;
-        }
-
-        .dark .text-to-type .current {
-            background-color: #ff3482; /* Darker blue highlight in dark mode */
-        }
-
-        /* Focus styles for input field */
-        input:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Blue focus ring */
-        }
-
-        /* Styling for buttons */
-        button {
-            transition: transform 0.1s ease-in-out, background-color 0.3s, color 0.3s;
-        }
-
-        button:active {
-            transform: scale(0.98);
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
-    <div class="container mx-auto bg-white shadow-xl rounded-xl p-8 max-w-4xl w-full flex flex-col items-center relative">
-        <!-- Dark Mode Toggle Button -->
-        <button id="darkModeToggle" class="absolute top-4 right-4 p-3 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 shadow-md hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-            <i class="fas fa-moon" id="darkModeIcon"></i>
-        </button>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
 
-        <h3 class="text-2xl font-extrabold text-blue-600 mb-8">Typing Speed Test By</h3>
-	<h3 class="text-2xl font-extrabold text-green-600 mb-8"><a href="https://www.mahsua.com/mahsua-games">MAHSUA</a></h3>
+    <!-- SVGs for Icons -->
+    <svg style="display:none;">
+        <symbol id="icon-keyboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8v4l8-2v-4l-8-2zm-12 4h10v8h-10v-8zm12 8h8v-4l-8-2v6z"/></symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></symbol>
+        <symbol id="icon-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></symbol>
+        <symbol id="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></symbol>
+        <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></symbol>
+        <symbol id="icon-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></symbol>
+        <symbol id="icon-rotate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></symbol>
+        <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></symbol>
+        <symbol id="icon-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></symbol>
+    </svg>
 
-        <!-- Level Selection Buttons -->
-        <div class="flex space-x-4 mb-8">
-            <button id="easyBtn" class="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">Easy</button>
-            <button id="mediumBtn" class="px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-75">Medium</button>
-            <button id="hardBtn" class="px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75">Hard</button>
-        </div>
-
-        <!-- Game Info Display -->
-        <div class="flex justify-around w-full mb-8 text-lg font-medium">
-            <div class="text-center">
-                <p class="text-gray-600 dark:text-gray-300">Time</p>
-                <p id="timer" class="text-3xl text-blue-700 dark:text-blue-300 font-bold">60s</p>
+    <!-- SETUP SCREEN -->
+    <div id="setup-screen" class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white max-w-md w-full rounded-2xl shadow-xl overflow-hidden border border-slate-100">
+            <div class="bg-teal-600 p-6 sm:p-8 text-center">
+                <img src="./assets/logo.png" alt="M Typing Test Logo" class="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 bg-white rounded-full shadow-lg border-2 border-white object-contain">
+                <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">M Typing Test</h1>
+                <p class="text-teal-100 text-sm sm:text-base">Evaluate and certify your typing skills</p>
             </div>
-            <div class="text-center">
-                <p class="text-gray-600 dark:text-gray-300">WPM</p>
-                <p id="wpm" class="text-3xl text-blue-700 dark:text-blue-300 font-bold">0</p>
+            
+            <form id="setup-form" class="p-6 sm:p-8 space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-slate-400"><use href="#icon-user"></use></svg> Your Name
+                    </label>
+                    <input type="text" id="user-name-input" required class="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition-all text-slate-800 font-medium" placeholder="Enter your full name">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-2 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-slate-400"><use href="#icon-target"></use></svg> Difficulty Level
+                    </label>
+                    <div class="grid grid-cols-3 gap-2 sm:gap-3" id="level-selector">
+                        <button type="button" data-level="Easy" class="level-btn py-2 rounded-lg text-sm font-medium transition-all bg-teal-600 text-white shadow-md shadow-teal-200">Easy</button>
+                        <button type="button" data-level="Medium" class="level-btn py-2 rounded-lg text-sm font-medium transition-all bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100">Medium</button>
+                        <button type="button" data-level="Hard" class="level-btn py-2 rounded-lg text-sm font-medium transition-all bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100">Hard</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 sm:py-4 rounded-xl flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg">
+                    <svg class="w-5 h-5"><use href="#icon-play"></use></svg> Start Test
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TYPING SCREEN -->
+    <div id="typing-screen" class="hidden flex flex-col items-center py-6 sm:py-12 px-4 w-full max-w-5xl mx-auto">
+        <!-- Header Stats (Responsive Grid) -->
+        <div class="w-full flex flex-col md:flex-row gap-4 justify-between items-center mb-4 sm:mb-8 bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex items-center gap-4 sm:gap-6 w-full md:w-auto justify-between md:justify-start">
+                <div class="flex flex-col">
+                    <span class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">User</span>
+                    <span id="display-user-name" class="text-base sm:text-lg font-bold text-slate-800 truncate max-w-[120px] sm:max-w-[200px]"></span>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Level</span>
+                    <span id="display-level" class="text-base sm:text-lg font-bold text-teal-600"></span>
+                </div>
             </div>
-            <div class="text-center">
-                <p class="text-gray-600 dark:text-gray-300">Accuracy</p>
-                <p id="accuracy" class="text-3xl text-blue-700 dark:text-blue-300 font-bold">0%</p>
+
+            <div class="grid grid-cols-3 gap-2 sm:flex sm:gap-8 w-full md:w-auto justify-items-center sm:justify-items-end border-t border-slate-100 md:border-none pt-4 md:pt-0">
+                <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-3">
+                    <svg id="timer-icon" class="w-5 h-5 sm:w-6 sm:h-6 text-slate-400"><use href="#icon-clock"></use></svg>
+                    <div class="flex flex-col items-center sm:items-start">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Time</span>
+                        <span id="display-time" class="text-lg sm:text-2xl font-black text-slate-800">60s</span>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-3">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-slate-400"><use href="#icon-target"></use></svg>
+                    <div class="flex flex-col items-center sm:items-start">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Net Speed</span>
+                        <span class="text-lg sm:text-2xl font-black text-teal-500"><span id="display-wpm">0</span> <span class="text-xs sm:text-sm">WPM</span></span>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center gap-1 sm:gap-3">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-slate-400"><use href="#icon-award"></use></svg>
+                    <div class="flex flex-col items-center sm:items-start">
+                        <span class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Accuracy</span>
+                        <span class="text-lg sm:text-2xl font-black text-slate-700"><span id="display-accuracy">0</span>%</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Text to Type Area -->
-        <div id="textToType" class="text-to-type bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-2xl leading-relaxed text-gray-900 dark:text-gray-100 mb-8 select-none tracking-wide text-justify break-words">
-            <span class="text-gray-500 dark:text-gray-400">Click a level and then Start to begin!</span>
+        <!-- Hidden Input for capturing keystrokes (Fixed position to prevent scroll jumping) -->
+        <input type="text" id="hidden-input" class="fixed top-0 left-0 opacity-0 w-0 h-0 pointer-events-none -z-50" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+
+        <!-- Typing Area Container -->
+        <div id="typing-area-container" class="w-full relative bg-white rounded-2xl shadow-lg border border-slate-200 cursor-text overflow-hidden">
+            <div id="start-overlay" class="absolute inset-0 z-10 flex items-center justify-center bg-white/60 backdrop-blur-[1px]">
+                <span class="bg-teal-600 text-white px-5 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-medium shadow-xl animate-bounce">
+                   Start typing to begin...
+                </span>
+            </div>
+
+            <!-- Scrollable Inner Viewpoint -->
+            <div id="text-container" class="p-6 sm:p-10 h-[300px] sm:h-[350px] overflow-y-auto custom-scrollbar">
+                <div id="text-display" class="text-xl sm:text-[26px] leading-[2.2] sm:leading-[2.5] font-mono select-none flex flex-wrap tracking-wide pb-12">
+                    <!-- Words will be injected here via JS -->
+                </div>
+            </div>
         </div>
 
-        <!-- User Input Field -->
-        <input type="text" id="textInput" class="w-full p-4 border-2 border-blue-300 rounded-lg text-2xl text-gray-800 dark:bg-gray-700 dark:text-gray-200 dark:border-blue-600 focus:border-blue-500" placeholder="Start typing here..." disabled>
-
-        <!-- Control Buttons -->
-        <div class="mt-8 flex space-x-4">
-            <button id="startBtn" class="px-8 py-4 bg-blue-600 text-white font-bold text-xl rounded-lg shadow-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Start</button>
-            <button id="resetBtn" class="px-8 py-4 bg-gray-500 text-white font-bold text-xl rounded-lg shadow-xl hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75">Reset</button>
+        <!-- Controls -->
+        <div class="mt-6 sm:mt-8 flex gap-4">
+            <button id="btn-restart" class="flex items-center gap-2 px-5 py-2 sm:px-6 sm:py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm sm:text-base font-semibold rounded-xl transition-colors">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5"><use href="#icon-rotate"></use></svg> Restart Test
+            </button>
         </div>
+    </div>
 
-        <!-- Message Box for alerts -->
-        <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-            <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-2xl text-center max-w-sm w-full">
-                <p id="messageText" class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6"></p>
-                <button id="messageBoxClose" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">OK</button>
+    <!-- RESULTS MODAL -->
+    <div id="result-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/70 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden animate-zoom-in my-8">
+            <div class="bg-teal-600 p-6 sm:p-8 text-center text-white relative">
+                <img src="./assets/logo.png" alt="M Typing Test Logo" class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 bg-white rounded-full shadow-lg border-2 border-white object-contain">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-1">Test Completed!</h2>
+                <p id="result-name" class="text-teal-100 font-medium text-sm sm:text-base"></p>
+            </div>
+            
+            <div class="p-4 sm:p-8">
+                <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
+                    <div class="bg-slate-50 p-3 sm:p-6 rounded-2xl border border-slate-100 text-center">
+                        <span class="block text-[10px] sm:text-xs font-bold text-slate-400 uppercase mb-1">Typing Speed</span>
+                        <span id="final-gross-wpm" class="block text-2xl sm:text-4xl font-black text-slate-700"></span>
+                        <span class="block text-[10px] sm:text-xs font-medium text-slate-500 mt-1">Gross WPM</span>
+                    </div>
+                    <div class="bg-slate-50 p-3 sm:p-6 rounded-2xl border border-slate-100 text-center">
+                        <span class="block text-[10px] sm:text-xs font-bold text-slate-400 uppercase mb-1">Accuracy</span>
+                        <span class="block text-2xl sm:text-4xl font-black text-slate-700"><span id="final-accuracy"></span>%</span>
+                        <span id="final-typos" class="block text-[10px] sm:text-xs font-medium text-red-500 mt-1">0 typos</span>
+                    </div>
+                    <div class="bg-teal-50 p-3 sm:p-6 rounded-2xl border border-teal-100 text-center shadow-inner">
+                        <span class="block text-[10px] sm:text-xs font-bold text-teal-600 uppercase mb-1">Net Speed</span>
+                        <span id="final-net-wpm" class="block text-2xl sm:text-4xl font-black text-teal-600"></span>
+                        <span class="block text-[10px] sm:text-xs font-medium text-teal-700 mt-1">WPM</span>
+                    </div>
+                </div>
+
+                <div id="certificate-buttons" class="flex flex-col sm:flex-row gap-3">
+                    <button id="btn-download" class="flex-1 flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 sm:py-4 px-4 rounded-xl transition-all shadow-lg shadow-teal-200 transform hover:-translate-y-0.5 text-sm sm:text-base">
+                        <svg class="w-5 h-5"><use href="#icon-download"></use></svg> Download Certificate
+                    </button>
+                    <button id="btn-share" class="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 sm:py-4 px-4 rounded-xl transition-all shadow-lg shadow-blue-200 transform hover:-translate-y-0.5 text-sm sm:text-base">
+                        <svg class="w-5 h-5"><use href="#icon-share"></use></svg> Share Certificate
+                    </button>
+                </div>
+                <p id="low-accuracy-msg" class="hidden text-red-500 text-center text-sm font-medium mt-3 italic">* Achieve more than 50% accuracy to get your certificate.</p>
+                <div class="mt-4">
+                    <button id="btn-try-again" class="w-full flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 sm:py-4 rounded-xl transition-all text-sm sm:text-base">
+                        <svg class="w-5 h-5"><use href="#icon-rotate"></use></svg> Try Again
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // DOM Elements
-        const textToTypeEl = document.getElementById('textToType');
-        const textInputEl = document.getElementById('textInput');
-        const timerEl = document.getElementById('timer');
-        const wpmEl = document.getElementById('wpm');
-        const accuracyEl = document.getElementById('accuracy');
-        const startBtn = document.getElementById('startBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const easyBtn = document.getElementById('easyBtn');
-        const mediumBtn = document.getElementById('mediumBtn');
-        const hardBtn = document.getElementById('hardBtn');
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const darkModeIcon = document.getElementById('darkModeIcon');
-        const messageBox = document.getElementById('messageBox');
-        const messageText = document.getElementById('messageText');
-        const messageBoxClose = document.getElementById('messageBoxClose');
-
-        // Game State Variables
-        let words = []; // Stores characters for the current level
-        let typedText = ''; // What the user has typed so far
-        let charIndex = 0; // Current character index in the displayed text
-        let timer = 60; // Default timer duration (seconds)
-        let countdownTimer; // Interval ID for the timer
-        let isRunning = false; // Is the game currently active
-        let correctChars = 0;
-        let incorrectChars = 0;
-        let totalTypedChars = 0; // Includes spaces, backspaces, etc.
-        let startTime; // Timestamp when typing actually begins
-        let selectedLevel = 'easy'; // Default level
-
-        // Helper function to insert a character at a random position within a word
-        function insertRandomChar(word, charsToInsert) {
-            if (word.length === 0) return charsToInsert[Math.floor(Math.random() * charsToInsert.length)];
-            const index = Math.floor(Math.random() * (word.length + 1));
-            const char = charsToInsert[Math.floor(Math.random() * charsToInsert.length)];
-            return word.slice(0, index) + char + word.slice(index);
-        }
-
-        // Word lists for different difficulty levels
-        const wordLists = {
-            easy: [
-                "the", "quick", "brown", "fox", "jumps", "over", "lazy", "dog", "a", "is", "it", "to", "and", "but", "or",
-                "of", "in", "on", "at", "for", "with", "as", "by", "from", "he", "she", "they", "we", "you", "my", "your",
-                "his", "her", "its", "their", "our", "are", "was", "were", "be", "been", "have", "has", "had", "do", "does",
-                "did", "will", "would", "can", "could", "should", "must", "go", "come", "see", "look", "make", "take", "get",
-                "come", "run", "walk", "talk", "read", "write", "eat", "drink", "sleep", "play", "work", "say", "tell", "ask",
-                "give", "find", "know", "think", "feel", "live", "love", "help", "need", "want", "like", "use", "open", "close",
-                "start", "end", "begin", "finish", "move", "stop", "put", "take", "bring", "send", "turn", "call", "show", "hear",
-                "meet", "buy", "sell", "keep", "hold", "grow", "fall", "rise", "learn", "teach", "travel", "drive", "ride", "fly",
-                "sing", "dance", "draw", "paint", "build", "create", "design", "plan", "solve", "guess", "hope", "wait", "wish",
-                "care", "share", "find", "lose", "break", "fix", "clean", "dirty", "easy", "hard", "good", "bad", "new", "old"
+        // --- Story Dictionaries ---
+        const STORIES = {
+            Easy: [
+                "The little brown dog loves to play in the park. Every morning, he runs after his bright red ball. His owner throws it far across the green grass. The dog runs as fast as he can to bring it back. They stay there for a long time. Other dogs come to play too. It is a very happy place. When the sun goes down, they walk back to their warm house. The dog eats his dinner quickly. Then he finds his soft bed and goes to sleep. He dreams about running in the park again. Tomorrow will be another fun day full of games and joy.",
+                "Once upon a time, there was a small cat named Luna. She lived in a big yellow house with a garden. Luna loved to chase butterflies in the spring. She would jump high in the air but never catch them. One day, she found a tiny mouse near the back door. Instead of chasing it, Luna just watched it eat a piece of cheese. The mouse looked up and squeaked. They became strange friends. Every afternoon, Luna and the mouse sat by the window in the warm sun. It was a very nice and quiet life for both of them."
             ],
-            medium: (() => {
-                const baseWords = [
-                    "experience", "keyboard", "programming", "javascript", "application", "development", "challenge", "performance",
-                    "efficiency", "algorithm", "structure", "functionality", "interface", "responsive", "navigation", "community",
-                    "information", "technology", "communication", "environment", "management", "opportunity", "organization", "solution",
-                    "understanding", "perspective", "creativity", "innovation", "discovery", "knowledge", "learning", "education",
-                    "research", "analysis", "evaluation", "improvement", "strategy", "planning", "decision", "problem", "success",
-                    "progress", "potential", "resource", "network", "system", "process", "culture", "diversity", "equality", "freedom",
-                    "justice", "security", "privacy", "protection", "government", "economy", "society", "citizen", "individual",
-                    "connection", "interaction", "cooperation", "collaboration", "partnership", "leadership", "motivation", "inspiration",
-                    "enthusiasm", "dedication", "commitment", "achievement", "recognition", "satisfaction", "happiness", "balance",
-                    "wellness", "fitness", "nutrition", "health", "science", "physics", "chemistry", "biology", "astronomy", "geology",
-                    "mathematics", "statistics", "computer", "internet", "website", "browser", "server", "database", "security", "cloud",
-                    "mobile", "desktop", "laptop", "tablet", "device", "software", "hardware", "firmware", "middleware", "framework",
-                    "library", "package", "module", "component", "feature", "attribute", "property", "element", "object", "variable"
-                ];
-                const specialChars = ['.', ',', '/', '?', '!', '(', ')', ';', ':'];
-                return baseWords.map(word => {
-                    let newWord = word;
-                    // Randomly capitalize first letter
-                    if (Math.random() < 0.5) { // 50% chance
-                        newWord = newWord.charAt(0).toUpperCase() + newWord.slice(1);
-                    }
-                    // Randomly insert a special character
-                    if (Math.random() < 0.3) { // 30% chance
-                        newWord = insertRandomChar(newWord, specialChars);
-                    }
-                    return newWord;
-                });
-            })(),
-            hard: (() => {
-                const baseWords = [
-                    "acquiesce", "benevolent", "capricious", "deleterious", "ephemeral", "flummoxed", "gregarious", "heuristic",
-                    "idiosyncrasy", "juxtaposition", "kaleidoscope", "labyrinthine", "magnanimous", "nefarious", "obfuscate",
-                    "paradoxical", "quixotic", "reciprocity", "sycophant", "ubiquitous", "vociferous", "winsome", "xenophobia",
-                    "yclept", "zephyr", "aberration", "cacophony", "dichotomy", "effervescent", "facetious", "grandiloquent",
-                    "haughty", "insidious", "juggernaut", "kudos", "lugubrious", "malapropism", "nonchalant", "oscillate",
-                    "pernicious", "quintessential", "recalcitrant", "sagacious", "tantamount", "ubiquitous", "veracity",
-                    "wastrel", "xylophone", "yare", "zenith", "admonish", "bellicose", "conundrum", "desultory", "equivocate",
-                    "fiduciary", "garrulous", "histrionic", "impecunious", "jocund", "lachrymose", "mendacious", "nadir",
-                    "obsequious", "parsimonious", "querulous", "raconteur", "salient", "trepidation", "unctuous", "vicissitude",
-                    "wry", "yearn", "zealot", "acrimonious", "blasphemy", "chicanery", "debilitate", "exacerbate", "farcical",
-                    "gauche", "haphazard", "incendiary", "jettison", "kismet", "lachrymose", "maudlin", "noisome", "obstreperous",
-                    "plenipotentiary", "quandary", "reprobate", "serendipity", "torpid", "unilateral", "vituperate", "wallow",
-                    "xeric", "yokel", "zany", "ambivalence", "bellwether", "circumlocution", "demagogue", "ebullient", "furtive",
-                    "gainsay", "heterogeneous", "immutable", "jejune", "kismet", "laconic", "misanthrope", "neophyte", "obdurate",
-                    "paragon", "querulous", "reclusive", "sanctimonious", "turbid", "ubiquitous", "vicarious", "wanton", "xenodochial",
-                    "yeoman", "zenith", "acuity", "beguile", "conflagration", "derelict", "effulgent", "fatuous", "gregarious",
-                    "harbinger", "inculcate", "jingoistic", "knavish", "lassitude", "mercurial", "nuance", "obstreperous",
-                    "pastiche", "quibble", "remonstrate", "sanguine", "tendentious", "umbrage", "venerable", "winsome",
-                    "xeriscape", "yowl", "zestful"
-                ];
-                const complexChars = ['@', '#', '$', '%', '^', '&', '*', '+', '=', '{', '}', '[', ']', '<', '>', '|', '~', '`'];
-                return baseWords.map(word => {
-                    let newWord = word.charAt(0).toUpperCase() + word.slice(1); // Capitalize first letter
-                    // Insert multiple special characters with higher probability
-                    for (let i = 0; i < Math.random() * 3; i++) { // Up to 2-3 special chars per word
-                        if (Math.random() < 0.6) { // 60% chance for each insertion attempt
-                            newWord = insertRandomChar(newWord, complexChars);
-                        }
-                    }
-                    return newWord;
-                });
-            })()
+            Medium: [
+                "The ancient library was hidden deep inside the castle walls. It held thousands of dusty books filled with forgotten knowledge. A young scholar named Elara spent her days reading through the fragile pages. She was searching for a specific map that could lead to the lost city of gold. One afternoon, while moving a heavy stack of encyclopedias, she noticed a loose brick in the wall. With a trembling hand, she pushed it aside to reveal a small, silver key. Her heart raced as she realized this could be the exact clue she had been desperately seeking for years.",
+                "The city was always busy and loud. Cars honked their horns and people rushed to work in tall buildings. But in the middle of it all, there was a quiet park where old friends met to play chess. They sat under large oak trees, ignoring the noise around them. Sometimes, pigeons would gather near their feet, waiting for breadcrumbs. It was a small peaceful island in a sea of concrete and glass. Everyone who walked by felt a little calmer just watching them focus entirely on their wooden pieces. As the sun faded, the streetlights would slowly flicker on."
+            ],
+            Hard: [
+                "The architectural complexity of the newly constructed metropolitan infrastructure is genuinely unparalleled. Urban developers meticulously orchestrated a decentralized transportation network designed to optimize vehicular efficiency and minimize environmental degradation. Symmetrical skyscrapers formulated with reinforced, translucent poly-carbonates dominated the illuminated skyline. Simultaneously, subterranean agricultural facilities utilized sophisticated hydroponic methodologies to cultivate sustainable botanical resources. This paradoxical amalgamation of technological advancement and ecological preservation demonstrated a transformative paradigm shift in modern civilization. Consequently, the international community frequently dispatched delegates to analyze these revolutionary implementations, hoping to replicate such ubiquitous prosperity within their respective geopolitical jurisdictions.",
+                "Quantum cryptography leverages the fundamental principles of quantum mechanics to establish unconditionally secure communication channels. Unlike classical encryption algorithms, which rely on the computational difficulty of factoring large prime numbers, quantum key distribution utilizes the superposition and entanglement of subatomic particles. If an unauthorized eavesdropper attempts to intercept the transmission, the fragile quantum states immediately collapse, alerting the communicating parties to the intrusion. Consequently, implementing this sophisticated technology requires overcoming significant engineering hurdles, including maintaining cryogenic temperatures and mitigating environmental decoherence over extensive fiber-optic networks. Researchers anticipate that widespread adoption will eventually revolutionize global data security and privacy protocols."
+            ]
         };
 
-        // Utility function to show custom message box instead of alert()
-        function showMessageBox(message) {
-            messageText.textContent = message;
-            messageBox.classList.remove('hidden');
-        }
+        const TEST_DURATIONS = {
+            Easy: 180,
+            Medium: 120,
+            Hard: 60
+        };
 
-        messageBoxClose.addEventListener('click', () => {
-            messageBox.classList.add('hidden');
-        });
+        // --- Application State ---
+        let state = {
+            userName: '',
+            level: 'Easy',
+            targetWords: [],
+            typedHistory: [],
+            currentInput: '',
+            timeLeft: 180,
+            initialTime: 180,
+            status: 'idle', // idle, running, finished
+            stats: { grossWpm: 0, netWpm: 0, accuracy: 0, errors: 0 },
+            timerInterval: null
+        };
 
-        // Function to load words based on selected level
-        function loadWords(level) {
-            // Shuffle the words and pick a subset for the game
-            const shuffledWords = wordLists[level].sort(() => Math.random() - 0.5);
-            words = shuffledWords.slice(0, 50).join(' ').split(''); // Get 50 words, join, then split into characters
-            
-            // Render the words with initial styling
-            textToTypeEl.innerHTML = words.map((char, index) => {
-                if (index === 0) {
-                    return `<span class="current">${char}</span>`;
-                }
-                return `<span>${char}</span>`;
-            }).join('');
-        }
-
-        // Initialize game on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            loadWords(selectedLevel);
-            updateMetrics(0, 0, 0); // Initialize WPM, Accuracy, Time to 0
-            textInputEl.value = '';
-            textInputEl.disabled = true; // Disable input until game starts
-            startBtn.disabled = false; // Enable start button
-        });
-
-        // Event Listener for input field
-        textInputEl.addEventListener('input', () => {
-            if (!isRunning) {
-                // Start the timer and set game to running state when user types first character
-                startTime = new Date().getTime();
-                startTimer();
-                isRunning = true;
-                startBtn.disabled = true; // Disable start button once game starts
-            }
-
-            typedText = textInputEl.value;
-            totalTypedChars = typedText.length; // Count every character typed
-
-            const displayedChars = textToTypeEl.querySelectorAll('span');
-            
-            // Remove previous highlighting from all characters
-            displayedChars.forEach(span => {
-                span.classList.remove('correct', 'incorrect', 'current');
+        // --- DOM Elements ---
+        const screens = {
+            setup: document.getElementById('setup-screen'),
+            typing: document.getElementById('typing-screen'),
+            result: document.getElementById('result-modal')
+        };
+        
+        const form = document.getElementById('setup-form');
+        const levelBtns = document.querySelectorAll('.level-btn');
+        const inputField = document.getElementById('hidden-input');
+        const textDisplay = document.getElementById('text-display');
+        const textContainer = document.getElementById('text-container');
+        const typingContainer = document.getElementById('typing-area-container');
+        const startOverlay = document.getElementById('start-overlay');
+        
+        // --- Initialization & Event Listeners ---
+        
+        // Handle Level Selection
+        levelBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                state.level = btn.dataset.level;
+                levelBtns.forEach(b => {
+                    b.className = "level-btn py-2 rounded-lg text-sm font-medium transition-all bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100";
+                });
+                btn.className = "level-btn py-2 rounded-lg text-sm font-medium transition-all bg-teal-600 text-white shadow-md shadow-teal-200";
             });
+        });
 
-            correctChars = 0;
-            incorrectChars = 0;
+        // Form Submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nameInput = document.getElementById('user-name-input').value.trim();
+            if (!nameInput) return;
+            state.userName = nameInput;
+            startTest();
+        });
 
-            for (let i = 0; i < typedText.length; i++) {
-                const charSpan = displayedChars[i];
-                const charTyped = typedText[i];
+        // Input Handling
+        typingContainer.addEventListener('click', () => {
+            if (state.status !== 'finished') inputField.focus();
+        });
 
-                if (charSpan) { // Ensure the span exists (typed text might exceed displayed text)
-                    if (charTyped === words[i]) { // Correct character
-                        charSpan.classList.add('correct');
-                        correctChars++;
-                    } else { // Incorrect character
-                        charSpan.classList.add('incorrect');
-                        incorrectChars++;
-                    }
-                }
+        inputField.addEventListener('input', (e) => {
+            if (state.status === 'idle') {
+                state.status = 'running';
+                startOverlay.style.display = 'none';
+                startTimer();
+            }
+            if (state.status === 'finished') return;
+
+            const value = e.target.value;
+
+            // Space pressed
+            if (value.endsWith(' ')) {
+                const typedWord = value.trim();
+                state.typedHistory.push(typedWord);
+                state.currentInput = '';
+                inputField.value = '';
+            } else {
+                state.currentInput = value;
             }
 
-            // Update charIndex to the current position of the cursor in the typed text
-            charIndex = typedText.length;
+            calculateStats();
+            renderTypingArea();
 
-            // Highlight the next character to type
-            if (charIndex < words.length) {
-                const nextCharSpan = displayedChars[charIndex];
-                if (nextCharSpan) {
-                    nextCharSpan.classList.add('current');
+            // Check for early completion (finished typing entire story)
+            const isLastWord = state.typedHistory.length === state.targetWords.length - 1;
+            const isLastWordTypedCorrectly = state.currentInput === state.targetWords[state.targetWords.length - 1];
+            const isPastLastWord = state.typedHistory.length >= state.targetWords.length;
+            
+            if ((isLastWord && isLastWordTypedCorrectly) || isPastLastWord) {
+                if (state.status !== 'finished') {
+                    finishTest();
                 }
-            }
-
-            calculateMetrics();
-
-            // Check if all words are typed
-            if (typedText.length === words.length && typedText === words.join('')) {
-                endGame("You finished! Well done!");
             }
         });
 
-        // Function to start the countdown timer
-        function startTimer() {
-            countdownTimer = setInterval(() => {
-                timer--;
-                timerEl.textContent = `${timer}s`;
-                calculateMetrics(); // Update metrics every second
+        // Buttons
+        document.getElementById('btn-restart').addEventListener('click', startTest);
+        document.getElementById('btn-try-again').addEventListener('click', startTest);
+        document.getElementById('btn-download').addEventListener('click', () => handleCertificate('download'));
+        document.getElementById('btn-share').addEventListener('click', () => handleCertificate('share'));
 
-                if (timer <= 0) {
-                    endGame("Time's up!");
+        // --- Core Logic ---
+
+        function generateParagraph(level) {
+            const levelStories = STORIES[level];
+            const story1 = levelStories[Math.floor(Math.random() * levelStories.length)];
+            const story2 = levelStories[Math.floor(Math.random() * levelStories.length)];
+            return (story1 + " " + story2).split(' ');
+        }
+
+        function startTest() {
+            clearInterval(state.timerInterval);
+            
+            state.targetWords = generateParagraph(state.level);
+            state.typedHistory = [];
+            state.currentInput = '';
+            
+            const duration = TEST_DURATIONS[state.level];
+            state.timeLeft = duration;
+            state.initialTime = duration;
+            
+            state.status = 'idle';
+            state.stats = { grossWpm: 0, netWpm: 0, accuracy: 0, errors: 0 };
+            
+            inputField.value = '';
+            
+            screens.setup.classList.add('hidden');
+            screens.result.classList.add('hidden');
+            screens.typing.classList.remove('hidden');
+            screens.typing.classList.add('flex');
+            startOverlay.style.display = 'flex';
+
+            document.getElementById('display-user-name').innerText = state.userName;
+            document.getElementById('display-level').innerText = state.level;
+            
+            updateStatsUI();
+            renderTypingArea();
+            
+            // Auto focus and reset scroll
+            setTimeout(() => {
+                inputField.focus();
+                textContainer.scrollTop = 0;
+            }, 100);
+        }
+
+        function startTimer() {
+            state.timerInterval = setInterval(() => {
+                state.timeLeft--;
+                updateStatsUI();
+                if (state.timeLeft <= 0) {
+                    finishTest();
                 }
             }, 1000);
         }
 
-        // Function to calculate WPM and Accuracy
-        function calculateMetrics() {
-            const timeElapsedInSeconds = (new Date().getTime() - startTime) / 1000;
-            const timeElapsedInMinutes = timeElapsedInSeconds / 60;
+        function calculateStats() {
+            let totalTypedChars = 0;
+            let errors = 0;
 
-            // WPM calculation: (number of typed words / time in minutes)
-            // A word is typically defined as 5 characters, including spaces.
-            const typedWordsCount = totalTypedChars / 5;
-            const wpm = timeElapsedInMinutes > 0 ? Math.round(typedWordsCount / timeElapsedInMinutes) : 0; 
+            // Calculate from history
+            state.typedHistory.forEach((typedWord, index) => {
+                const targetWord = state.targetWords[index];
+                if (!targetWord) return;
+                
+                totalTypedChars += typedWord.length + 1; // +1 for the space
+
+                const maxLen = Math.max(typedWord.length, targetWord.length);
+                for (let i = 0; i < maxLen; i++) {
+                    if (typedWord[i] !== targetWord[i]) {
+                        errors++;
+                    }
+                }
+            });
+
+            // Calculate from current word
+            const currentTarget = state.targetWords[state.typedHistory.length];
+            if (currentTarget) {
+                totalTypedChars += state.currentInput.length;
+                for (let i = 0; i < state.currentInput.length; i++) {
+                    if (state.currentInput[i] !== currentTarget[i]) {
+                        errors++;
+                    }
+                }
+            }
+
+            const timeElapsedInMinutes = (state.initialTime - state.timeLeft) / 60;
+            let grossWpm = timeElapsedInMinutes > 0 ? Math.round((totalTypedChars / 5) / timeElapsedInMinutes) : 0;
+            let netWpm = timeElapsedInMinutes > 0 ? Math.round(grossWpm - (errors / timeElapsedInMinutes)) : 0;
+            if (netWpm < 0) netWpm = 0;
             
-            // Accuracy calculation: (correct characters / total characters typed) * 100
-            const accuracy = totalTypedChars > 0 ? Math.round((correctChars / totalTypedChars) * 100) : 0;
+            let accuracy = totalTypedChars > 0 ? Math.round(((totalTypedChars - errors) / totalTypedChars) * 100) : 100;
+            if (accuracy < 0) accuracy = 0;
 
-            updateMetrics(wpm, accuracy, timer);
+            state.stats = { grossWpm, netWpm, accuracy, errors };
+            updateStatsUI();
         }
 
-        // Function to update the displayed metrics
-        function updateMetrics(wpmValue, accuracyValue, timerValue) {
-            wpmEl.textContent = wpmValue;
-            accuracyEl.textContent = `${accuracyValue}%`;
-            timerEl.textContent = `${timerValue}s`;
-        }
-
-        // Function to end the game
-        function endGame(message) {
-            clearInterval(countdownTimer);
-            isRunning = false;
-            textInputEl.disabled = true;
-            calculateMetrics(); // Final calculation
-            startBtn.disabled = false; // Re-enable start button for new game
-            showMessageBox(`${message}\nYour final WPM: ${wpmEl.textContent}\nAccuracy: ${accuracyEl.textContent}`);
-        }
-
-        // Function to reset the game
-        function resetGame() {
-            clearInterval(countdownTimer);
-            isRunning = false;
-            charIndex = 0;
-            correctChars = 0;
-            incorrectChars = 0;
-            totalTypedChars = 0;
-            timer = 60; // Reset timer to default
-            typedText = '';
-            textInputEl.value = '';
-            textInputEl.disabled = true;
-            loadWords(selectedLevel); // Reload words for the selected level
-            updateMetrics(0, 0, timer);
-            startBtn.disabled = false;
-        }
-
-        // Event Listeners for buttons
-        startBtn.addEventListener('click', () => {
-            if (!isRunning) {
-                resetGame(); // Ensure game is fully reset before starting
-                textInputEl.disabled = false;
-                textInputEl.focus(); // Focus input field for immediate typing
-                startTime = new Date().getTime(); // Set start time now
-                startTimer();
-                isRunning = true;
-                startBtn.disabled = true;
-            }
-        });
-
-        resetBtn.addEventListener('click', resetGame);
-
-        easyBtn.addEventListener('click', () => {
-            selectedLevel = 'easy';
-            resetGame();
-            showMessageBox("Level set to Easy. Click Start to begin!");
-        });
-
-        mediumBtn.addEventListener('click', () => {
-            selectedLevel = 'medium';
-            resetGame();
-            showMessageBox("Level set to Medium. Click Start to begin!");
-        });
-
-        hardBtn.addEventListener('click', () => {
-            selectedLevel = 'hard';
-            resetGame();
-            showMessageBox("Level set to Hard. Click Start to begin!");
-        });
-
-        // Dark Mode Toggle
-        darkModeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            if (document.documentElement.classList.contains('dark')) {
-                darkModeIcon.classList.remove('fa-moon');
-                darkModeIcon.classList.add('fa-sun');
+        function updateStatsUI() {
+            const timeEl = document.getElementById('display-time');
+            const iconEl = document.getElementById('timer-icon');
+            
+            timeEl.innerText = `${state.timeLeft}s`;
+            if (state.timeLeft <= 10) {
+                timeEl.classList.add('text-red-500');
+                timeEl.classList.remove('text-slate-800');
+                iconEl.classList.add('text-red-500', 'animate-pulse');
+                iconEl.classList.remove('text-slate-400');
             } else {
-                darkModeIcon.classList.remove('fa-sun');
-                darkModeIcon.classList.add('fa-moon');
+                timeEl.classList.remove('text-red-500');
+                timeEl.classList.add('text-slate-800');
+                iconEl.classList.remove('text-red-500', 'animate-pulse');
+                iconEl.classList.add('text-slate-400');
             }
-        });
 
-        // Initial dark mode check (optional, based on user preference or system setting)
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-            darkModeIcon.classList.remove('fa-moon');
-            darkModeIcon.classList.add('fa-sun');
+            document.getElementById('display-wpm').innerText = state.stats.netWpm;
+            document.getElementById('display-accuracy').innerText = state.stats.accuracy;
+        }
+
+        function finishTest() {
+            clearInterval(state.timerInterval);
+            state.status = 'finished';
+            calculateStats();
+            
+            document.getElementById('result-name').innerText = `M Typing Test Report`;
+            document.getElementById('final-gross-wpm').innerText = state.stats.grossWpm;
+            document.getElementById('final-net-wpm').innerText = state.stats.netWpm;
+            document.getElementById('final-accuracy').innerText = state.stats.accuracy;
+            document.getElementById('final-typos').innerText = `${state.stats.errors} typos`;
+            
+            // Toggle certificate eligibility based on accuracy
+            const certBtns = document.getElementById('certificate-buttons');
+            const lowAccMsg = document.getElementById('low-accuracy-msg');
+            if (state.stats.accuracy > 50) {
+                certBtns.classList.remove('hidden');
+                certBtns.classList.add('flex');
+                lowAccMsg.classList.add('hidden');
+            } else {
+                certBtns.classList.add('hidden');
+                certBtns.classList.remove('flex');
+                lowAccMsg.classList.remove('hidden');
+            }
+
+            screens.result.classList.remove('hidden');
+            inputField.blur();
+        }
+
+        function renderTypingArea() {
+            let html = '';
+            
+            state.targetWords.forEach((targetWord, index) => {
+                const isHistory = index < state.typedHistory.length;
+                const isActive = index === state.typedHistory.length;
+
+                if (isHistory) {
+                    const typedWord = state.typedHistory[index];
+                    html += `<span class="mr-3 mb-2 inline-block">`;
+                    
+                    const maxLen = Math.max(targetWord.length, typedWord.length);
+                    for(let i=0; i<maxLen; i++) {
+                        if (i < targetWord.length) {
+                            const char = targetWord[i];
+                            if (i < typedWord.length && typedWord[i] === char) {
+                                html += `<span class="text-emerald-500">${char}</span>`;
+                            } else {
+                                html += `<span class="text-red-500 bg-red-100 px-[1px] rounded-sm">${char}</span>`;
+                            }
+                        } else {
+                            html += `<span class="text-red-500 bg-red-100 px-[1px] rounded-sm opacity-80">${typedWord[i]}</span>`;
+                        }
+                    }
+                    html += `</span>`;
+                } 
+                else if (isActive) {
+                    // Added ID here to track the active word for scrolling
+                    html += `<span id="active-word" class="mr-3 mb-2 bg-blue-100/60 rounded-lg px-1.5 py-0.5 relative inline-block transition-colors">`;
+                    
+                    const maxLen = Math.max(targetWord.length, state.currentInput.length + 1);
+                    for (let i = 0; i < maxLen; i++) {
+                        let isCurrent = i === state.currentInput.length;
+                        let isTyped = i < state.currentInput.length;
+
+                        if (i < targetWord.length) {
+                            const char = targetWord[i];
+                            if (isCurrent) {
+                                html += `<span class="text-blue-600 font-bold border-b-[3px] border-blue-600 pb-[1px]">${char}</span>`;
+                            } else if (isTyped) {
+                                if (state.currentInput[i] === char) {
+                                    html += `<span class="text-emerald-500">${char}</span>`;
+                                } else {
+                                    html += `<span class="text-red-500 bg-red-100 px-[1px] rounded-sm">${char}</span>`;
+                                }
+                            } else {
+                                html += `<span class="text-slate-400">${char}</span>`;
+                            }
+                        } else {
+                            if (isCurrent) {
+                                html += `<span class="text-blue-600 font-bold border-b-[3px] border-blue-600 pb-[1px]">&nbsp;</span>`;
+                            } else if (isTyped) {
+                                html += `<span class="text-red-500 bg-red-100 px-[1px] rounded-sm">${state.currentInput[i]}</span>`;
+                            }
+                        }
+                    }
+                    html += `</span>`;
+                } 
+                else {
+                    html += `<span class="text-slate-400 mr-3 mb-2 inline-block">${targetWord}</span>`;
+                }
+            });
+
+            textDisplay.innerHTML = html;
+
+            // --- Auto-scroll Logic ---
+            const activeWordEl = document.getElementById('active-word');
+            if (activeWordEl && textContainer) {
+                // Determine scrolling target so the active word stays in the top 1/3rd of the box
+                const scrollTarget = activeWordEl.offsetTop - (textContainer.clientHeight / 3);
+                
+                // Only scroll if we moved down enough
+                if (textContainer.scrollTop < scrollTarget || textContainer.scrollTop > activeWordEl.offsetTop) {
+                    textContainer.scrollTo({
+                        top: scrollTarget > 0 ? scrollTarget : 0,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }
+
+        // --- Certificate Generation & Sharing ---
+        function handleCertificate(action) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1100;
+            canvas.height = 800;
+            const ctx = canvas.getContext('2d');
+
+            const logoImg = new Image();
+            logoImg.onload = () => { drawCert(canvas, ctx, logoImg, action); };
+            logoImg.onerror = () => { drawCert(canvas, ctx, null, action); };
+            logoImg.src = './assets/logo.png';
+        }
+
+        function drawCert(canvas, ctx, logoImg, action) {
+            const primaryColor = '#1e3a8a';
+            const accentColor = '#d97706';
+            const textColor = '#334155';
+            const lightBg = '#f8fafc';
+
+            ctx.fillStyle = lightBg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = primaryColor;
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = accentColor;
+            ctx.strokeRect(35, 35, canvas.width - 70, canvas.height - 70);
+
+            if (logoImg) {
+                const ratio = 100 / logoImg.height;
+                const w = logoImg.width * ratio;
+                ctx.drawImage(logoImg, canvas.width / 2 - w / 2, 80, w, 100);
+            } else {
+                const cx = canvas.width / 2;
+                const cy = 130;
+                ctx.fillStyle = '#0f4c81';
+                ctx.beginPath();
+                ctx.arc(cx, cy, 55, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#f26822';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.arc(cx, cy, 45, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 50px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('M', cx, cy + 18);
+            }
+
+            ctx.textAlign = 'center';
+            ctx.fillStyle = primaryColor;
+            ctx.font = 'bold 48px Arial, sans-serif';
+            ctx.fillText('CERTIFICATE OF EXCELLENCE', canvas.width / 2, 270);
+            
+            ctx.fillStyle = accentColor;
+            ctx.font = 'italic 24px Arial, sans-serif';
+            ctx.fillText('Awarded for outstanding typing performance', canvas.width / 2, 320);
+
+            ctx.fillStyle = textColor;
+            ctx.font = '20px Arial, sans-serif';
+            ctx.fillText('This certificate is proudly presented to:', canvas.width / 2, 390);
+
+            ctx.fillStyle = primaryColor;
+            ctx.font = 'bold 56px Arial, sans-serif';
+            ctx.fillText(state.userName.toUpperCase(), canvas.width / 2, 470);
+
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2 - 300, 490);
+            ctx.lineTo(canvas.width / 2 + 300, 490);
+            ctx.strokeStyle = accentColor;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.fillStyle = textColor;
+            ctx.font = '18px Arial, sans-serif';
+            const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            ctx.fillText(`For successfully completing the M Typing Test on ${dateStr}`, canvas.width / 2, 550);
+            ctx.fillText(`with the following verified statistics at the ${state.level} difficulty level.`, canvas.width / 2, 580);
+
+            const drawBadge = (x, y, label, value, subtext, subtextColor = '#94a3b8') => {
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+                ctx.shadowBlur = 15;
+                ctx.shadowOffsetY = 5;
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                if (ctx.roundRect) {
+                    ctx.roundRect(x, y, 240, 120, 16);
+                } else {
+                    const r = 16, w = 240, h = 120;
+                    ctx.moveTo(x + r, y);
+                    ctx.lineTo(x + w - r, y);
+                    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+                    ctx.lineTo(x + w, y + h - r);
+                    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                    ctx.lineTo(x + r, y + h);
+                    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+                    ctx.lineTo(x, y + r);
+                    ctx.quadraticCurveTo(x, y, x + r, y);
+                }
+                ctx.closePath();
+                ctx.fill();
+                
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetY = 0;
+
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 16px Arial, sans-serif';
+                ctx.fillText(label.toUpperCase(), x + 120, y + 35);
+
+                ctx.fillStyle = primaryColor;
+                ctx.font = 'bold 44px Arial, sans-serif';
+                ctx.fillText(value, x + 120, y + 80);
+
+                if (subtext) {
+                    ctx.fillStyle = subtextColor;
+                    ctx.font = '14px Arial, sans-serif';
+                    ctx.fillText(subtext, x + 120, y + 105);
+                }
+            };
+
+            drawBadge(160, 610, 'Time', `${state.initialTime}s`, 'Test Duration');
+            drawBadge(430, 610, 'Net Speed', `${state.stats.netWpm}`, 'WPM'); 
+            drawBadge(700, 610, 'Accuracy', `${state.stats.accuracy}%`, `${state.stats.errors} Typos`, '#ef4444');
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '14px Arial, sans-serif';
+            ctx.fillText('Verified Document | M Typing Test | m-typing-test.com', canvas.width / 2, 745);
+
+            const dataUrl = canvas.toDataURL('image/png');
+            const fileName = `${state.userName.replace(/\s+/g, '_')}_Typing_Certificate.png`;
+
+            if (action === 'download') {
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.download = fileName;
+                link.click();
+            } 
+            else if (action === 'share') {
+                canvas.toBlob((blob) => {
+                    const file = new File([blob], fileName, { type: 'image/png' });
+                    if (navigator.share && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            title: 'My M Typing Test Result',
+                            text: `I just scored ${state.stats.netWpm} WPM with ${state.stats.accuracy}% accuracy on M Typing Test!`,
+                            files: [file]
+                        }).catch((error) => console.log('Error sharing', error));
+                    } else {
+                        alert('Your browser does not support native sharing for images. Please download the certificate instead.');
+                    }
+                });
+            }
         }
     </script>
 </body>
