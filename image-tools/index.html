@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Tools - Mahsua Apps</title>
+    <link rel="icon" href="../favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-9351361840615541">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T3YBTXHNJY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-T3YBTXHNJY');
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-gradient-start: #ffe6f0;
+            --bg-gradient-middle: #e0f3ff;
+            --bg-gradient-end: #e6ffe6;
+            --container-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.86);
+            --text-color: #1f2937;
+            --label-color: #4b5563;
+            --muted-color: #6b7280;
+            --input-bg: rgba(255, 255, 255, 0.96);
+            --input-border: rgba(236, 72, 153, 0.28);
+            --input-focus-border: #ec489a;
+            --button-bg: linear-gradient(135deg, #ec489a, #3b82f6);
+            --button-green-bg: linear-gradient(135deg, #22c55e, #16a34a);
+            --button-shadow: rgba(236, 72, 153, 0.28);
+            --glass-border: rgba(236, 72, 153, 0.22);
+            --chip-bg: rgba(236, 72, 153, 0.08);
+            --chip-border: rgba(236, 72, 153, 0.22);
+            --chip-text: #be185d;
+            --message-box-bg: #dcfce7;
+            --message-box-text: #15803d;
+            --message-box-border: #86efac;
+            --message-box-error-bg: #fee2e2;
+            --message-box-error-text: #dc2626;
+            --message-box-error-border: #fecaca;
+        }
+
+        [data-mode="dark"] {
+            --bg-gradient-start: #1a1a2e;
+            --bg-gradient-middle: #16213e;
+            --bg-gradient-end: #0f3460;
+            --container-bg: rgba(20, 30, 48, 0.94);
+            --card-bg: rgba(30, 41, 59, 0.86);
+            --text-color: #f1f5f9;
+            --label-color: #cbd5e1;
+            --muted-color: #94a3b8;
+            --input-bg: rgba(15, 23, 42, 0.88);
+            --input-border: rgba(236, 72, 153, 0.35);
+            --glass-border: rgba(236, 72, 153, 0.28);
+            --chip-bg: rgba(236, 72, 153, 0.16);
+            --chip-border: rgba(236, 72, 153, 0.35);
+            --chip-text: #f9a8d4;
+            --message-box-bg: #143325;
+            --message-box-text: #34d399;
+            --message-box-border: #10b981;
+            --message-box-error-bg: #631717;
+            --message-box-error-text: #fca5a5;
+            --message-box-error-border: #ef4444;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-middle) 50%, var(--bg-gradient-end) 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 76px 16px 36px;
+            transition: background 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(236, 72, 153, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+                radial-gradient(circle at top left, rgba(236, 72, 153, 0.12), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.1), transparent 26%);
+            background-size: 26px 26px, 26px 26px, 100% 100%, 100% 100%;
+            z-index: 0;
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .top-pill-btn {
+            pointer-events: auto;
+            padding: 0.58rem 1.08rem;
+            background: var(--container-bg);
+            backdrop-filter: blur(20px);
+            color: var(--text-color);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .top-pill-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(236, 72, 153, 0.2);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 2.2rem;
+            position: relative;
+            z-index: 1;
+            animation: riseIn 0.6s ease-out;
+        }
+
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-row {
+            text-align: center;
+            margin-bottom: 1.4rem;
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #ec489a, #3b82f6, #22c55e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitle {
+            color: var(--muted-color);
+            font-size: 0.94rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.28rem 0.8rem;
+            border-radius: 50px;
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        /* Tool Tabs */
+        .tool-tabs {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-tab {
+            padding: 0.75rem 0.45rem;
+            border-radius: 18px;
+            border: 1.5px solid var(--glass-border);
+            background: var(--card-bg);
+            color: var(--label-color);
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-align: center;
+        }
+
+        .tool-tab .tab-icon {
+            font-size: 1.25rem;
+        }
+
+        .tool-tab:hover {
+            border-color: var(--input-focus-border);
+            transform: translateY(-2px);
+        }
+
+        .tool-tab.active {
+            background: var(--button-bg);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 6px 16px var(--button-shadow);
+        }
+
+        /* Dropzone */
+        .dropzone {
+            border: 2px dashed var(--input-border);
+            border-radius: 24px;
+            background: var(--card-bg);
+            padding: 1.85rem 1.25rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin-bottom: 1.15rem;
+        }
+
+        .dropzone:hover,
+        .dropzone.dragover {
+            border-color: #ec489a;
+            background: rgba(236, 72, 153, 0.06);
+        }
+
+        .dropzone-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .dropzone-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .dropzone-sub {
+            font-size: 0.84rem;
+            color: var(--muted-color);
+        }
+
+        /* Options Bar */
+        .options-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 22px;
+            padding: 1.1rem 1.2rem;
+            margin-bottom: 1.15rem;
+        }
+
+        .options-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .opt-field {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .opt-field label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--muted-color);
+            margin-bottom: 0.35rem;
+        }
+
+        .opt-field select,
+        .opt-field input {
+            width: 100%;
+            padding: 0.62rem 0.85rem;
+            border-radius: 14px;
+            border: 1.5px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+        }
+
+        .opt-field select:focus,
+        .opt-field input:focus {
+            outline: none;
+            border-color: var(--input-focus-border);
+        }
+
+        .preset-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        .preset-label {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--muted-color);
+        }
+
+        .chip-btn {
+            padding: 0.28rem 0.7rem;
+            font-size: 0.76rem;
+            font-weight: 700;
+            border-radius: 50px;
+            background: var(--chip-bg);
+            border: 1px solid var(--chip-border);
+            color: var(--chip-text);
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .chip-btn:hover {
+            background: var(--button-bg);
+            color: #ffffff;
+            border-color: transparent;
+        }
+
+        .primary-btn {
+            padding: 0.78rem 1.35rem;
+            border: none;
+            border-radius: 16px;
+            font-size: 0.94rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: var(--button-bg);
+            box-shadow: 0 6px 16px var(--button-shadow);
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .primary-btn.green {
+            background: var(--button-green-bg);
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.25);
+        }
+
+        .primary-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        /* Result Preview Box */
+        .preview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 1rem;
+        }
+
+        .preview-box {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .preview-box-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.65rem;
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--label-color);
+        }
+
+        .size-pill {
+            font-size: 0.76rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            background: var(--chip-bg);
+            color: var(--chip-text);
+        }
+
+        .size-pill.green {
+            background: rgba(34, 197, 94, 0.14);
+            color: #16a34a;
+        }
+
+        .preview-box img {
+            max-width: 100%;
+            max-height: 260px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .dual-upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .copyright {
+            margin-top: 1.75rem;
+            font-size: 0.78rem;
+            text-align: center;
+            color: var(--muted-color);
+        }
+
+        .copyright a {
+            color: #ec489a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--message-box-bg);
+            color: var(--message-box-text);
+            padding: 0.8rem 1.35rem;
+            border-radius: 50px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--message-box-border);
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+
+        .message-box.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .message-box.error {
+            background-color: var(--message-box-error-bg);
+            color: var(--message-box-error-text);
+            border-color: var(--message-box-error-border);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 68px 12px 24px;
+            }
+            .container {
+                padding: 1.35rem;
+                border-radius: 24px;
+            }
+            h1 {
+                font-size: 1.85rem;
+            }
+            .tool-tabs {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .preview-grid,
+            .dual-upload-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="https://apps.mahsua.com/" class="top-pill-btn">
+            <span>🏠</span> <span>Mahsua Apps</span>
+        </a>
+        <button id="modeToggleBtn" class="top-pill-btn" onclick="toggleDarkMode()">
+            <span id="modeIcon">🌙</span> <span id="modeText">Dark Mode</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="header-row">
+            <h1>🖼️ Image Tools</h1>
+            <p class="subtitle">Compress to exact KB, resize pixels, crop, convert formats &amp; merge photo + signature</p>
+            <span class="privacy-badge">🔒 100% Private — Processed locally in your browser</span>
+        </div>
+
+        <!-- Tool Tabs -->
+        <div class="tool-tabs">
+            <button type="button" class="tool-tab active" data-tool="compress" onclick="switchTool('compress', this)">
+                <span class="tab-icon">🗜️</span><span>Compress KB</span>
+            </button>
+            <button type="button" class="tool-tab" data-tool="increase" onclick="switchTool('increase', this)">
+                <span class="tab-icon">📈</span><span>Increase KB</span>
+            </button>
+            <button type="button" class="tool-tab" data-tool="resize" onclick="switchTool('resize', this)">
+                <span class="tab-icon">📐</span><span>Resize Pixel</span>
+            </button>
+            <button type="button" class="tool-tab" data-tool="crop" onclick="switchTool('crop', this)">
+                <span class="tab-icon">✂️</span><span>Crop &amp; Rotate</span>
+            </button>
+            <button type="button" class="tool-tab" data-tool="convert" onclick="switchTool('convert', this)">
+                <span class="tab-icon">🔄</span><span>Convert</span>
+            </button>
+            <button type="button" class="tool-tab" data-tool="signature" onclick="switchTool('signature', this)">
+                <span class="tab-icon">🪪</span><span>Photo + Sign</span>
+            </button>
+        </div>
+
+        <!-- 1. COMPRESS TO EXACT KB -->
+        <div id="panel-compress" class="tool-panel">
+            <div class="dropzone" onclick="document.getElementById('compressInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'compressInput')">
+                <div class="dropzone-icon">🗜️</div>
+                <div class="dropzone-title">Select or Drop Image to Compress</div>
+                <div class="dropzone-sub" id="compressFileLabel">Reduce JPG, PNG, or WebP to an exact KB target for forms &amp; uploads</div>
+                <input type="file" id="compressInput" accept="image/*" class="hidden">
+            </div>
+
+            <div class="options-card">
+                <div class="options-row">
+                    <div class="opt-field">
+                        <label for="targetKbInput">Target Max Size (KB)</label>
+                        <input type="number" id="targetKbInput" min="5" max="10000" value="50">
+                    </div>
+                    <div class="opt-field">
+                        <label for="compressFormatSelect">Output Format</label>
+                        <select id="compressFormatSelect">
+                            <option value="image/jpeg">JPG (Best for KB target)</option>
+                            <option value="image/webp">WebP</option>
+                        </select>
+                    </div>
+                    <button type="button" class="primary-btn" onclick="runCompressToKb()">Compress Now</button>
+                </div>
+                <div class="preset-chips">
+                    <span class="preset-label">Popular targets:</span>
+                    <button type="button" class="chip-btn" onclick="setTargetKb(20)">20 KB</button>
+                    <button type="button" class="chip-btn" onclick="setTargetKb(50)">50 KB</button>
+                    <button type="button" class="chip-btn" onclick="setTargetKb(100)">100 KB</button>
+                    <button type="button" class="chip-btn" onclick="setTargetKb(200)">200 KB</button>
+                    <button type="button" class="chip-btn" onclick="setTargetKb(500)">500 KB</button>
+                </div>
+            </div>
+
+            <div id="compressResults" class="preview-grid hidden">
+                <div class="preview-box">
+                    <div class="preview-box-header">
+                        <span>Original</span>
+                        <span class="size-pill" id="compressOrigSize">0 KB</span>
+                    </div>
+                    <img id="compressOrigImg" alt="Original">
+                </div>
+                <div class="preview-box">
+                    <div class="preview-box-header">
+                        <span>Compressed</span>
+                        <span class="size-pill green" id="compressNewSize">0 KB</span>
+                    </div>
+                    <img id="compressNewImg" alt="Compressed">
+                    <div style="margin-top:10px;">
+                        <button type="button" class="primary-btn green" id="downloadCompressBtn" style="width:100%;">⬇ Download Compressed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. INCREASE IMAGE SIZE IN KB -->
+        <div id="panel-increase" class="tool-panel hidden">
+            <div class="dropzone" onclick="document.getElementById('increaseInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'increaseInput')">
+                <div class="dropzone-icon">📈</div>
+                <div class="dropzone-title">Select or Drop Image to Increase Size</div>
+                <div class="dropzone-sub" id="increaseFileLabel">Boost file size to meet minimum KB requirements</div>
+                <input type="file" id="increaseInput" accept="image/*" class="hidden">
+            </div>
+
+            <div class="options-card">
+                <div class="options-row">
+                    <div class="opt-field">
+                        <label for="increaseTargetKb">Desired Size (KB)</label>
+                        <input type="number" id="increaseTargetKb" min="10" max="10000" value="100">
+                    </div>
+                    <button type="button" class="primary-btn green" onclick="runIncreaseKb()">Increase &amp; Download</button>
+                </div>
+                <div class="preset-chips">
+                    <span class="preset-label">Quick targets:</span>
+                    <button type="button" class="chip-btn" onclick="document.getElementById('increaseTargetKb').value=50">50 KB</button>
+                    <button type="button" class="chip-btn" onclick="document.getElementById('increaseTargetKb').value=100">100 KB</button>
+                    <button type="button" class="chip-btn" onclick="document.getElementById('increaseTargetKb').value=250">250 KB</button>
+                    <button type="button" class="chip-btn" onclick="document.getElementById('increaseTargetKb').value=500">500 KB</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. RESIZE IMAGE PIXEL -->
+        <div id="panel-resize" class="tool-panel hidden">
+            <div class="dropzone" onclick="document.getElementById('resizeInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'resizeInput')">
+                <div class="dropzone-icon">📐</div>
+                <div class="dropzone-title">Select or Drop Image to Resize</div>
+                <div class="dropzone-sub" id="resizeFileLabel">Resize to exact pixel dimensions with optional aspect lock</div>
+                <input type="file" id="resizeInput" accept="image/*" class="hidden">
+            </div>
+
+            <div class="options-card">
+                <div class="options-row">
+                    <div class="opt-field">
+                        <label for="resizeWidth">Width (px)</label>
+                        <input type="number" id="resizeWidth" min="1" max="8000" placeholder="Width">
+                    </div>
+                    <div class="opt-field">
+                        <label for="resizeHeight">Height (px)</label>
+                        <input type="number" id="resizeHeight" min="1" max="8000" placeholder="Height">
+                    </div>
+                    <div class="opt-field" style="flex:0.7;">
+                        <label for="resizeLockAspect">Aspect Ratio</label>
+                        <select id="resizeLockAspect">
+                            <option value="lock">Locked</option>
+                            <option value="free">Custom</option>
+                        </select>
+                    </div>
+                    <button type="button" class="primary-btn green" onclick="runResize()">Resize &amp; Download</button>
+                </div>
+                <div class="preset-chips">
+                    <span class="preset-label">Presets:</span>
+                    <button type="button" class="chip-btn" onclick="setResizePreset(413, 531)">Passport (413×531)</button>
+                    <button type="button" class="chip-btn" onclick="setResizePreset(200, 230)">Exam Photo (200×230)</button>
+                    <button type="button" class="chip-btn" onclick="setResizePreset(140, 60)">Signature (140×60)</button>
+                    <button type="button" class="chip-btn" onclick="setResizePreset(1080, 1080)">Square (1080×1080)</button>
+                    <button type="button" class="chip-btn" onclick="setResizePreset(1280, 720)">YouTube (1280×720)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. CROP & ROTATE -->
+        <div id="panel-crop" class="tool-panel hidden">
+            <div class="dropzone" onclick="document.getElementById('cropInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'cropInput')">
+                <div class="dropzone-icon">✂️</div>
+                <div class="dropzone-title">Select or Drop Image to Crop / Rotate</div>
+                <div class="dropzone-sub" id="cropFileLabel">Center-crop to aspect ratios, rotate 90°, or flip</div>
+                <input type="file" id="cropInput" accept="image/*" class="hidden">
+            </div>
+
+            <div class="options-card">
+                <div class="options-row">
+                    <div class="opt-field">
+                        <label for="cropRatioSelect">Crop Aspect Ratio</label>
+                        <select id="cropRatioSelect" onchange="renderCropPreview()">
+                            <option value="original">Original (No Crop)</option>
+                            <option value="1:1">1:1 Square</option>
+                            <option value="3:4">3:4 Portrait / Exam</option>
+                            <option value="35:45">Passport (35×45)</option>
+                            <option value="4:3">4:3 Standard</option>
+                            <option value="16:9">16:9 Widescreen</option>
+                        </select>
+                    </div>
+                    <button type="button" class="primary-btn" onclick="rotateCropImg()">↻ Rotate 90°</button>
+                    <button type="button" class="primary-btn" onclick="flipCropImg()">⇄ Flip</button>
+                    <button type="button" class="primary-btn green" onclick="downloadCropResult()">⬇ Download</button>
+                </div>
+            </div>
+
+            <div id="cropPreviewWrap" class="preview-box hidden">
+                <div class="preview-box-header">
+                    <span>Preview</span>
+                    <span class="size-pill green" id="cropDimLabel">0 × 0 px</span>
+                </div>
+                <canvas id="cropCanvas" style="max-width:100%; max-height:320px; border-radius:12px; border:1px solid rgba(0,0,0,0.08);"></canvas>
+            </div>
+        </div>
+
+        <!-- 5. CONVERT FORMAT -->
+        <div id="panel-convert" class="tool-panel hidden">
+            <div class="dropzone" onclick="document.getElementById('convertInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'convertInput')">
+                <div class="dropzone-icon">🔄</div>
+                <div class="dropzone-title">Select or Drop Image to Convert</div>
+                <div class="dropzone-sub" id="convertFileLabel">Convert between JPG, PNG, and WebP</div>
+                <input type="file" id="convertInput" accept="image/*" class="hidden">
+            </div>
+
+            <div class="options-card">
+                <div class="options-row">
+                    <div class="opt-field">
+                        <label for="convertFormatSelect">Convert To</label>
+                        <select id="convertFormatSelect">
+                            <option value="image/jpeg">JPG (.jpg)</option>
+                            <option value="image/png">PNG (.png)</option>
+                            <option value="image/webp">WebP (.webp)</option>
+                        </select>
+                    </div>
+                    <div class="opt-field">
+                        <label for="convertQuality">Quality (%)</label>
+                        <input type="number" id="convertQuality" min="10" max="100" value="92">
+                    </div>
+                    <button type="button" class="primary-btn green" onclick="runConvertFormat()">Convert &amp; Download</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. MERGE PHOTO & SIGNATURE -->
+        <div id="panel-signature" class="tool-panel hidden">
+            <div class="dual-upload-grid">
+                <div class="dropzone" style="margin-bottom:0;" onclick="document.getElementById('sigPhotoInput').click()">
+                    <div class="dropzone-icon">🧑</div>
+                    <div class="dropzone-title">1. Upload Photo</div>
+                    <div class="dropzone-sub" id="sigPhotoLabel">Passport / ID photo</div>
+                    <input type="file" id="sigPhotoInput" accept="image/*" class="hidden">
+                </div>
+                <div class="dropzone" style="margin-bottom:0;" onclick="document.getElementById('sigSignInput').click()">
+                    <div class="dropzone-icon">✍️</div>
+                    <div class="dropzone-title">2. Upload Signature</div>
+                    <div class="dropzone-sub" id="sigSignLabel">Signature image</div>
+                    <input type="file" id="sigSignInput" accept="image/*" class="hidden">
+                </div>
+            </div>
+
+            <div class="options-card">
+                <div class="options-row">
+                    <div class="opt-field">
+                        <label for="sigCaptionInput">Optional Name / Date Below Photo</label>
+                        <input type="text" id="sigCaptionInput" placeholder="e.g. Name • 21-11-2026">
+                    </div>
+                    <button type="button" class="primary-btn green" onclick="runMergePhotoSign()">🪪 Merge &amp; Download JPG</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            Made With ❤️ INDIA ~ Designed by <a href="https://proshivamkushwaha.mahsua.com" target="_blank">SHIVAM KUSHWAHA</a> | © <a href="https://www.mahsua.com" target="_blank">MAHSUA</a>
+        </div>
+    </div>
+
+    <div id="messageBox" class="message-box"></div>
+
+    <script>
+        const modeIcon = document.getElementById('modeIcon');
+        const modeText = document.getElementById('modeText');
+        const messageBox = document.getElementById('messageBox');
+        let currentAppMode = localStorage.getItem('displayMode') || 'light';
+
+        let compressFile = null;
+        let compressedBlob = null;
+        let increaseFile = null;
+        let resizeImg = null;
+        let resizeFileName = 'resized.jpg';
+        let cropImg = null;
+        let cropRotation = 0;
+        let cropFlipX = false;
+        let convertFile = null;
+        let sigPhotoImg = null;
+        let sigSignImg = null;
+
+        function applyAppMode(mode) {
+            currentAppMode = mode;
+            document.body.setAttribute('data-mode', mode);
+            localStorage.setItem('displayMode', mode);
+            modeIcon.textContent = mode === 'dark' ? '☀️' : '🌙';
+            modeText.textContent = mode === 'dark' ? 'Light Mode' : 'Dark Mode';
+        }
+
+        function toggleDarkMode() {
+            applyAppMode(currentAppMode === 'light' ? 'dark' : 'light');
+        }
+
+        function switchTool(toolId, btn) {
+            document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            document.querySelectorAll('.tool-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById(`panel-${toolId}`).classList.remove('hidden');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(e, inputId) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+            const input = document.getElementById(inputId);
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                const dt = new DataTransfer();
+                Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+                input.files = dt.files;
+                input.dispatchEvent(new Event('change'));
+            }
+        }
+
+        function formatKb(bytes) {
+            return `${(bytes / 1024).toFixed(1)} KB`;
+        }
+
+        function displayMessage(msg, type = 'success') {
+            messageBox.textContent = msg;
+            messageBox.className = 'message-box show' + (type === 'error' ? ' error' : '');
+            setTimeout(() => messageBox.classList.remove('show'), 2800);
+        }
+
+        function loadImageFromFile(file) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                const url = URL.createObjectURL(file);
+                img.onload = () => resolve({ img, url });
+                img.onerror = reject;
+                img.src = url;
+            });
+        }
+
+        function canvasToBlob(canvas, mime, quality) {
+            return new Promise(resolve => canvas.toBlob(resolve, mime, quality));
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(url), 1500);
+        }
+
+        // 1. COMPRESS TO EXACT KB
+        document.getElementById('compressInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            compressFile = file;
+            document.getElementById('compressFileLabel').textContent = `Selected: ${file.name} (${formatKb(file.size)})`;
+            document.getElementById('compressResults').classList.add('hidden');
+        });
+
+        function setTargetKb(kb) {
+            document.getElementById('targetKbInput').value = kb;
+        }
+
+        async function runCompressToKb() {
+            if (!compressFile) {
+                displayMessage('Please select an image first.', 'error');
+                return;
+            }
+            const targetKb = Math.max(5, parseFloat(document.getElementById('targetKbInput').value) || 50);
+            const targetBytes = targetKb * 1024;
+            const mime = document.getElementById('compressFormatSelect').value;
+            const ext = mime === 'image/webp' ? 'webp' : 'jpg';
+
+            const { img, url } = await loadImageFromFile(compressFile);
+            let scale = 1;
+            let bestBlob = null;
+
+            // Try quality binary search first, then scale down if still above target
+            for (let attempt = 0; attempt < 6; attempt++) {
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.max(1, Math.round(img.width * scale));
+                canvas.height = Math.max(1, Math.round(img.height * scale));
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                let low = 0.05;
+                let high = 0.95;
+                let candidate = await canvasToBlob(canvas, mime, 0.92);
+
+                if (candidate.size <= targetBytes) {
+                    bestBlob = candidate;
+                    break;
+                }
+
+                for (let step = 0; step < 8; step++) {
+                    const mid = (low + high) / 2;
+                    const b = await canvasToBlob(canvas, mime, mid);
+                    if (b.size <= targetBytes) {
+                        bestBlob = b;
+                        low = mid;
+                    } else {
+                        high = mid;
+                    }
+                }
+
+                if (bestBlob && bestBlob.size <= targetBytes) break;
+                scale *= 0.75;
+                if (!bestBlob) bestBlob = await canvasToBlob(canvas, mime, 0.08);
+            }
+
+            compressedBlob = bestBlob;
+            document.getElementById('compressOrigImg').src = url;
+            document.getElementById('compressOrigSize').textContent = formatKb(compressFile.size);
+            document.getElementById('compressNewImg').src = URL.createObjectURL(compressedBlob);
+            document.getElementById('compressNewSize').textContent = formatKb(compressedBlob.size);
+            document.getElementById('compressResults').classList.remove('hidden');
+
+            document.getElementById('downloadCompressBtn').onclick = () => {
+                const base = compressFile.name.replace(/\.[^.]+$/, '');
+                downloadBlob(compressedBlob, `${base}-${targetKb}kb.${ext}`);
+            };
+            displayMessage(`Compressed to ${formatKb(compressedBlob.size)}!`);
+        }
+
+        // 2. INCREASE IMAGE SIZE IN KB
+        document.getElementById('increaseInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            increaseFile = file;
+            document.getElementById('increaseFileLabel').textContent = `Selected: ${file.name} (${formatKb(file.size)})`;
+        });
+
+        async function runIncreaseKb() {
+            if (!increaseFile) {
+                displayMessage('Please select an image first.', 'error');
+                return;
+            }
+            const targetKb = Math.max(10, parseFloat(document.getElementById('increaseTargetKb').value) || 100);
+            const targetBytes = targetKb * 1024;
+            const { img } = await loadImageFromFile(increaseFile);
+
+            let scale = 1;
+            let blob = null;
+            for (let i = 0; i < 6; i++) {
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.round(img.width * scale);
+                canvas.height = Math.round(img.height * scale);
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                blob = await canvasToBlob(canvas, 'image/jpeg', 1.0);
+                if (blob.size >= targetBytes) break;
+                scale *= 1.35;
+            }
+
+            // If still slightly below targetBytes, pad safely with JPEG comment bytes
+            if (blob.size < targetBytes) {
+                const padCount = Math.ceil(targetBytes - blob.size);
+                const padding = new Uint8Array(padCount);
+                blob = new Blob([blob, padding], { type: 'image/jpeg' });
+            }
+
+            const base = increaseFile.name.replace(/\.[^.]+$/, '');
+            downloadBlob(blob, `${base}-${targetKb}kb.jpg`);
+            displayMessage(`Increased to ${formatKb(blob.size)}!`);
+        }
+
+        // 3. RESIZE IMAGE PIXEL
+        const resizeW = document.getElementById('resizeWidth');
+        const resizeH = document.getElementById('resizeHeight');
+        const resizeLock = document.getElementById('resizeLockAspect');
+
+        document.getElementById('resizeInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            resizeFileName = file.name.replace(/\.[^.]+$/, '') + '-resized.jpg';
+            const { img } = await loadImageFromFile(file);
+            resizeImg = img;
+            resizeW.value = img.width;
+            resizeH.value = img.height;
+            document.getElementById('resizeFileLabel').textContent = `Selected: ${file.name} (${img.width}×${img.height} px)`;
+        });
+
+        resizeW.addEventListener('input', () => {
+            if (resizeImg && resizeLock.value === 'lock') {
+                const w = parseInt(resizeW.value, 10);
+                if (w > 0) resizeH.value = Math.round((w / resizeImg.width) * resizeImg.height);
+            }
+        });
+
+        resizeH.addEventListener('input', () => {
+            if (resizeImg && resizeLock.value === 'lock') {
+                const h = parseInt(resizeH.value, 10);
+                if (h > 0) resizeW.value = Math.round((h / resizeImg.height) * resizeImg.width);
+            }
+        });
+
+        function setResizePreset(w, h) {
+            resizeLock.value = 'free';
+            resizeW.value = w;
+            resizeH.value = h;
+        }
+
+        async function runResize() {
+            if (!resizeImg) {
+                displayMessage('Please select an image first.', 'error');
+                return;
+            }
+            const w = Math.max(1, parseInt(resizeW.value, 10) || resizeImg.width);
+            const h = Math.max(1, parseInt(resizeH.value, 10) || resizeImg.height);
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(resizeImg, 0, 0, w, h);
+            const blob = await canvasToBlob(canvas, 'image/jpeg', 0.92);
+            downloadBlob(blob, resizeFileName);
+            displayMessage(`Resized to ${w}×${h} px!`);
+        }
+
+        // 4. CROP & ROTATE
+        document.getElementById('cropInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const { img } = await loadImageFromFile(file);
+            cropImg = img;
+            cropRotation = 0;
+            cropFlipX = false;
+            document.getElementById('cropFileLabel').textContent = `Selected: ${file.name}`;
+            document.getElementById('cropPreviewWrap').classList.remove('hidden');
+            renderCropPreview();
+        });
+
+        function rotateCropImg() {
+            if (!cropImg) return;
+            cropRotation = (cropRotation + 90) % 360;
+            renderCropPreview();
+        }
+
+        function flipCropImg() {
+            if (!cropImg) return;
+            cropFlipX = !cropFlipX;
+            renderCropPreview();
+        }
+
+        function renderCropPreview() {
+            if (!cropImg) return;
+            const ratioVal = document.getElementById('cropRatioSelect').value;
+            const canvas = document.getElementById('cropCanvas');
+            const ctx = canvas.getContext('2d');
+
+            const rotatedSwap = cropRotation === 90 || cropRotation === 270;
+            const fullW = rotatedSwap ? cropImg.height : cropImg.width;
+            const fullH = rotatedSwap ? cropImg.width : cropImg.height;
+
+            // Draw rotated/flipped full image on temp canvas
+            const tmp = document.createElement('canvas');
+            tmp.width = fullW;
+            tmp.height = fullH;
+            const tctx = tmp.getContext('2d');
+            tctx.translate(fullW / 2, fullH / 2);
+            tctx.rotate((cropRotation * Math.PI) / 180);
+            if (cropFlipX) tctx.scale(-1, 1);
+            tctx.drawImage(cropImg, -cropImg.width / 2, -cropImg.height / 2);
+
+            let cw = fullW;
+            let ch = fullH;
+            if (ratioVal !== 'original') {
+                const [rw, rh] = ratioVal.split(':').map(Number);
+                const targetRatio = rw / rh;
+                if (fullW / fullH > targetRatio) {
+                    cw = Math.round(fullH * targetRatio);
+                    ch = fullH;
+                } else {
+                    cw = fullW;
+                    ch = Math.round(fullW / targetRatio);
+                }
+            }
+
+            const sx = Math.round((fullW - cw) / 2);
+            const sy = Math.round((fullH - ch) / 2);
+            canvas.width = cw;
+            canvas.height = ch;
+            ctx.drawImage(tmp, sx, sy, cw, ch, 0, 0, cw, ch);
+            document.getElementById('cropDimLabel').textContent = `${cw} × ${ch} px`;
+        }
+
+        async function downloadCropResult() {
+            if (!cropImg) {
+                displayMessage('Please select an image first.', 'error');
+                return;
+            }
+            const blob = await canvasToBlob(document.getElementById('cropCanvas'), 'image/png', 1.0);
+            downloadBlob(blob, 'mahsua-edited-image.png');
+            displayMessage('Edited image downloaded!');
+        }
+
+        // 5. CONVERT FORMAT
+        document.getElementById('convertInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            convertFile = file;
+            document.getElementById('convertFileLabel').textContent = `Selected: ${file.name} (${formatKb(file.size)})`;
+        });
+
+        async function runConvertFormat() {
+            if (!convertFile) {
+                displayMessage('Please select an image first.', 'error');
+                return;
+            }
+            const mime = document.getElementById('convertFormatSelect').value;
+            const ext = mime === 'image/png' ? 'png' : (mime === 'image/webp' ? 'webp' : 'jpg');
+            const quality = Math.min(1, Math.max(0.1, (parseFloat(document.getElementById('convertQuality').value) || 92) / 100));
+
+            const { img } = await loadImageFromFile(convertFile);
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            if (mime === 'image/jpeg') {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            ctx.drawImage(img, 0, 0);
+            const blob = await canvasToBlob(canvas, mime, quality);
+            const base = convertFile.name.replace(/\.[^.]+$/, '');
+            downloadBlob(blob, `${base}.${ext}`);
+            displayMessage(`Converted to ${ext.toUpperCase()}!`);
+        }
+
+        // 6. MERGE PHOTO + SIGNATURE
+        document.getElementById('sigPhotoInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            sigPhotoImg = (await loadImageFromFile(file)).img;
+            document.getElementById('sigPhotoLabel').textContent = `Loaded: ${file.name}`;
+        });
+
+        document.getElementById('sigSignInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            sigSignImg = (await loadImageFromFile(file)).img;
+            document.getElementById('sigSignLabel').textContent = `Loaded: ${file.name}`;
+        });
+
+        async function runMergePhotoSign() {
+            if (!sigPhotoImg || !sigSignImg) {
+                displayMessage('Please upload both a photo and a signature.', 'error');
+                return;
+            }
+            const caption = document.getElementById('sigCaptionInput').value.trim();
+            const width = 420;
+            const photoH = Math.round((width / sigPhotoImg.width) * sigPhotoImg.height);
+            const signH = Math.round((width / sigSignImg.width) * sigSignImg.height);
+            const captionH = caption ? 42 : 0;
+            const gap = 16;
+            const totalH = photoH + captionH + gap + signH + 24;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = width + 24;
+            canvas.height = totalH;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.drawImage(sigPhotoImg, 12, 12, width, photoH);
+            let y = 12 + photoH;
+
+            if (caption) {
+                ctx.fillStyle = '#111827';
+                ctx.font = 'bold 20px Outfit, Arial, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(caption, canvas.width / 2, y + 28);
+                y += captionH;
+            }
+
+            ctx.drawImage(sigSignImg, 12, y + gap, width, signH);
+            const blob = await canvasToBlob(canvas, 'image/jpeg', 0.92);
+            downloadBlob(blob, 'mahsua-photo-signature.jpg');
+            displayMessage('Photo & signature merged!');
+        }
+
+        window.onload = function() {
+            applyAppMode(currentAppMode);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Tools - Mahsua Apps</title>
+    <link rel="icon" href="../favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-9351361840615541">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T3YBTXHNJY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-T3YBTXHNJY');
+    </script>
+    <!-- Client-side PDF libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-gradient-start: #ffe6f0;
+            --bg-gradient-middle: #e0f3ff;
+            --bg-gradient-end: #e6ffe6;
+            --container-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.86);
+            --text-color: #1f2937;
+            --label-color: #4b5563;
+            --muted-color: #6b7280;
+            --input-bg: rgba(255, 255, 255, 0.96);
+            --input-border: rgba(236, 72, 153, 0.28);
+            --input-focus-border: #ec489a;
+            --button-bg: linear-gradient(135deg, #ec489a, #3b82f6);
+            --button-green-bg: linear-gradient(135deg, #22c55e, #16a34a);
+            --button-shadow: rgba(236, 72, 153, 0.28);
+            --glass-border: rgba(236, 72, 153, 0.22);
+            --chip-bg: rgba(236, 72, 153, 0.08);
+            --chip-border: rgba(236, 72, 153, 0.22);
+            --chip-text: #be185d;
+            --message-box-bg: #dcfce7;
+            --message-box-text: #15803d;
+            --message-box-border: #86efac;
+            --message-box-error-bg: #fee2e2;
+            --message-box-error-text: #dc2626;
+            --message-box-error-border: #fecaca;
+        }
+
+        [data-mode="dark"] {
+            --bg-gradient-start: #1a1a2e;
+            --bg-gradient-middle: #16213e;
+            --bg-gradient-end: #0f3460;
+            --container-bg: rgba(20, 30, 48, 0.94);
+            --card-bg: rgba(30, 41, 59, 0.86);
+            --text-color: #f1f5f9;
+            --label-color: #cbd5e1;
+            --muted-color: #94a3b8;
+            --input-bg: rgba(15, 23, 42, 0.88);
+            --input-border: rgba(236, 72, 153, 0.35);
+            --glass-border: rgba(236, 72, 153, 0.28);
+            --chip-bg: rgba(236, 72, 153, 0.16);
+            --chip-border: rgba(236, 72, 153, 0.35);
+            --chip-text: #f9a8d4;
+            --message-box-bg: #143325;
+            --message-box-text: #34d399;
+            --message-box-border: #10b981;
+            --message-box-error-bg: #631717;
+            --message-box-error-text: #fca5a5;
+            --message-box-error-border: #ef4444;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-middle) 50%, var(--bg-gradient-end) 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 76px 16px 36px;
+            transition: background 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(236, 72, 153, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+                radial-gradient(circle at top left, rgba(236, 72, 153, 0.12), transparent 28%),
+                radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.1), transparent 26%);
+            background-size: 26px 26px, 26px 26px, 100% 100%, 100% 100%;
+            z-index: 0;
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .top-pill-btn {
+            pointer-events: auto;
+            padding: 0.58rem 1.08rem;
+            background: var(--container-bg);
+            backdrop-filter: blur(20px);
+            color: var(--text-color);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .top-pill-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(236, 72, 153, 0.2);
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 2.2rem;
+            position: relative;
+            z-index: 1;
+            animation: riseIn 0.6s ease-out;
+        }
+
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-row {
+            text-align: center;
+            margin-bottom: 1.4rem;
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #ec489a, #3b82f6, #22c55e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitle {
+            color: var(--muted-color);
+            font-size: 0.94rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.28rem 0.8rem;
+            border-radius: 50px;
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        /* Tool Tabs */
+        .tool-tabs {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-tab {
+            padding: 0.75rem 0.5rem;
+            border-radius: 18px;
+            border: 1.5px solid var(--glass-border);
+            background: var(--card-bg);
+            color: var(--label-color);
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-align: center;
+        }
+
+        .tool-tab .tab-icon {
+            font-size: 1.25rem;
+        }
+
+        .tool-tab:hover {
+            border-color: var(--input-focus-border);
+            transform: translateY(-2px);
+        }
+
+        .tool-tab.active {
+            background: var(--button-bg);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 6px 16px var(--button-shadow);
+        }
+
+        /* Dropzone */
+        .dropzone {
+            border: 2px dashed var(--input-border);
+            border-radius: 24px;
+            background: var(--card-bg);
+            padding: 2rem 1.25rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin-bottom: 1.15rem;
+        }
+
+        .dropzone:hover,
+        .dropzone.dragover {
+            border-color: #ec489a;
+            background: rgba(236, 72, 153, 0.06);
+        }
+
+        .dropzone-icon {
+            font-size: 2.3rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .dropzone-title {
+            font-weight: 700;
+            font-size: 1.02rem;
+            color: var(--text-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .dropzone-sub {
+            font-size: 0.84rem;
+            color: var(--muted-color);
+        }
+
+        /* Controls & Options */
+        .options-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: end;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1rem 1.15rem;
+            margin-bottom: 1.15rem;
+        }
+
+        .opt-field {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .opt-field label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--muted-color);
+            margin-bottom: 0.35rem;
+        }
+
+        .opt-field select,
+        .opt-field input {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border-radius: 14px;
+            border: 1.5px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .opt-field select:focus,
+        .opt-field input:focus {
+            outline: none;
+            border-color: var(--input-focus-border);
+        }
+
+        .primary-btn {
+            padding: 0.78rem 1.35rem;
+            border: none;
+            border-radius: 16px;
+            font-size: 0.94rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: var(--button-bg);
+            box-shadow: 0 6px 16px var(--button-shadow);
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .primary-btn.green {
+            background: var(--button-green-bg);
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.25);
+        }
+
+        .primary-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* File List / Queue */
+        .queue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 1.15rem;
+        }
+
+        .queue-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 0.7rem 0.95rem;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        .queue-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .queue-thumb {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid var(--glass-border);
+            flex-shrink: 0;
+        }
+
+        .queue-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .queue-meta {
+            font-size: 0.76rem;
+            color: var(--muted-color);
+        }
+
+        .queue-actions {
+            display: flex;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .mini-btn {
+            padding: 0.35rem 0.6rem;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .mini-btn.danger {
+            color: #ef4444;
+        }
+
+        /* Rendered Image Thumbnails (PDF to Image) */
+        .image-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            gap: 14px;
+            margin-top: 1rem;
+        }
+
+        .page-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .page-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: #ffffff;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .page-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* Extracted Text Output */
+        .text-output {
+            width: 100%;
+            min-height: 240px;
+            padding: 1rem;
+            border-radius: 18px;
+            border: 1.5px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.86rem;
+            line-height: 1.55;
+            resize: vertical;
+        }
+
+        .copyright {
+            margin-top: 1.75rem;
+            font-size: 0.78rem;
+            text-align: center;
+            color: var(--muted-color);
+        }
+
+        .copyright a {
+            color: #ec489a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--message-box-bg);
+            color: var(--message-box-text);
+            padding: 0.8rem 1.35rem;
+            border-radius: 50px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--message-box-border);
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+
+        .message-box.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .message-box.error {
+            background-color: var(--message-box-error-bg);
+            color: var(--message-box-error-text);
+            border-color: var(--message-box-error-border);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 68px 12px 24px;
+            }
+            .container {
+                padding: 1.35rem;
+                border-radius: 24px;
+            }
+            h1 {
+                font-size: 1.85rem;
+            }
+            .tool-tabs {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="https://apps.mahsua.com/" class="top-pill-btn">
+            <span>🏠</span> <span>Mahsua Apps</span>
+        </a>
+        <button id="modeToggleBtn" class="top-pill-btn" onclick="toggleDarkMode()">
+            <span id="modeIcon">🌙</span> <span id="modeText">Dark Mode</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="header-row">
+            <h1>📚 PDF Tools</h1>
+            <p class="subtitle">Convert, merge, split, rotate, and extract text from PDFs</p>
+            <span class="privacy-badge">🔒 100% Private — Processed locally in your browser</span>
+        </div>
+
+        <!-- Tool Switcher -->
+        <div class="tool-tabs">
+            <button type="button" class="tool-tab active" data-tool="pdf2img" onclick="switchTool('pdf2img', this)">
+                <span class="tab-icon">🖼️</span><span>PDF to Image</span>
+            </button>
+            <button type="button" class="tool-tab" data-tool="img2pdf" onclick="switchTool('img2pdf', this)">
+                <span class="tab-icon">📄</span><span>Image to PDF</span>
+            </button>
+            <button type="button" class="tool-tab" data-tool="merge" onclick="switchTool('merge', this)">
+                <span class="tab-icon">📑</span><span>Merge PDF</span>
+            </button>
+            <button type="button" class="tool-tab" data-tool="split" onclick="switchTool('split', this)">
+                <span class="tab-icon">✂️</span><span>Split PDF</span>
+            </button>
+            <button type="button" class="tool-tab" data-tool="rotate" onclick="switchTool('rotate', this)">
+                <span class="tab-icon">🔄</span><span>Rotate PDF</span>
+            </button>
+            <button type="button" class="tool-tab" data-tool="extract" onclick="switchTool('extract', this)">
+                <span class="tab-icon">📝</span><span>Extract Text</span>
+            </button>
+        </div>
+
+        <!-- PANEL 1: PDF TO IMAGE -->
+        <div id="panel-pdf2img" class="tool-panel">
+            <div class="dropzone" onclick="document.getElementById('pdf2imgInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'pdf2imgInput')">
+                <div class="dropzone-icon">🖼️</div>
+                <div class="dropzone-title">Select or Drop a PDF File</div>
+                <div class="dropzone-sub" id="pdf2imgFileLabel">Convert every PDF page into high-resolution PNG or JPG images</div>
+                <input type="file" id="pdf2imgInput" accept="application/pdf" class="hidden">
+            </div>
+
+            <div class="options-bar">
+                <div class="opt-field">
+                    <label for="imgFormatSelect">Output Format</label>
+                    <select id="imgFormatSelect">
+                        <option value="image/png">PNG (Lossless)</option>
+                        <option value="image/jpeg">JPG (Smaller Size)</option>
+                    </select>
+                </div>
+                <div class="opt-field">
+                    <label for="imgScaleSelect">Quality / Resolution</label>
+                    <select id="imgScaleSelect">
+                        <option value="1.5">Standard (1.5x)</option>
+                        <option value="2" selected>High (2x)</option>
+                        <option value="3">Ultra HD (3x)</option>
+                    </select>
+                </div>
+                <button type="button" class="primary-btn" id="convertPdf2ImgBtn" onclick="runPdfToImage()">Convert Pages</button>
+                <button type="button" class="primary-btn green hidden" id="downloadAllImagesZipBtn" onclick="downloadAllImagesZip()">⬇ Download All (ZIP)</button>
+            </div>
+
+            <div class="image-results-grid" id="pdf2imgResults"></div>
+        </div>
+
+        <!-- PANEL 2: IMAGE TO PDF -->
+        <div id="panel-img2pdf" class="tool-panel hidden">
+            <div class="dropzone" onclick="document.getElementById('img2pdfInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'img2pdfInput')">
+                <div class="dropzone-icon">📄</div>
+                <div class="dropzone-title">Select or Drop Images (JPG, PNG, WebP)</div>
+                <div class="dropzone-sub">Combine multiple images into one PDF document</div>
+                <input type="file" id="img2pdfInput" accept="image/png,image/jpeg,image/webp" multiple class="hidden">
+            </div>
+
+            <div class="queue-list" id="img2pdfQueue"></div>
+
+            <div class="options-bar">
+                <div class="opt-field">
+                    <label for="pdfPageSizeSelect">Page Size</label>
+                    <select id="pdfPageSizeSelect">
+                        <option value="a4">A4 (Portrait / Auto)</option>
+                        <option value="letter">US Letter</option>
+                        <option value="fit">Fit to Each Image</option>
+                    </select>
+                </div>
+                <button type="button" class="primary-btn green" onclick="runImageToPdf()">📄 Create PDF</button>
+            </div>
+        </div>
+
+        <!-- PANEL 3: MERGE PDF -->
+        <div id="panel-merge" class="tool-panel hidden">
+            <div class="dropzone" onclick="document.getElementById('mergePdfInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'mergePdfInput')">
+                <div class="dropzone-icon">📑</div>
+                <div class="dropzone-title">Select or Drop Multiple PDFs</div>
+                <div class="dropzone-sub">Reorder files below and combine them into one PDF</div>
+                <input type="file" id="mergePdfInput" accept="application/pdf" multiple class="hidden">
+            </div>
+
+            <div class="queue-list" id="mergeQueue"></div>
+
+            <div class="options-bar" style="justify-content: flex-end;">
+                <button type="button" class="primary-btn green" onclick="runMergePdf()">📑 Merge &amp; Download PDF</button>
+            </div>
+        </div>
+
+        <!-- PANEL 4: SPLIT PDF -->
+        <div id="panel-split" class="tool-panel hidden">
+            <div class="dropzone" onclick="document.getElementById('splitPdfInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'splitPdfInput')">
+                <div class="dropzone-icon">✂️</div>
+                <div class="dropzone-title">Select or Drop a PDF to Split</div>
+                <div class="dropzone-sub" id="splitFileLabel">Extract specific pages or ranges (e.g., 1-3, 5)</div>
+                <input type="file" id="splitPdfInput" accept="application/pdf" class="hidden">
+            </div>
+
+            <div class="options-bar">
+                <div class="opt-field">
+                    <label for="splitRangeInput">Pages to Extract (e.g., 1-3, 5, 8)</label>
+                    <input type="text" id="splitRangeInput" placeholder="e.g. 1-3, 5">
+                </div>
+                <button type="button" class="primary-btn" onclick="runSplitRange()">✂️ Extract Range (PDF)</button>
+                <button type="button" class="primary-btn green" onclick="runSplitAllPagesZip()">📦 Split Every Page (ZIP)</button>
+            </div>
+        </div>
+
+        <!-- PANEL 5: ROTATE PDF -->
+        <div id="panel-rotate" class="tool-panel hidden">
+            <div class="dropzone" onclick="document.getElementById('rotatePdfInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'rotatePdfInput')">
+                <div class="dropzone-icon">🔄</div>
+                <div class="dropzone-title">Select or Drop a PDF to Rotate</div>
+                <div class="dropzone-sub" id="rotateFileLabel">Rotate all pages or specific pages cleanly</div>
+                <input type="file" id="rotatePdfInput" accept="application/pdf" class="hidden">
+            </div>
+
+            <div class="options-bar">
+                <div class="opt-field">
+                    <label for="rotateAngleSelect">Rotation Angle</label>
+                    <select id="rotateAngleSelect">
+                        <option value="90">90° Clockwise</option>
+                        <option value="180">180° Upside Down</option>
+                        <option value="270">90° Counter-Clockwise (270°)</option>
+                    </select>
+                </div>
+                <div class="opt-field">
+                    <label for="rotatePagesInput">Pages (blank = all pages)</label>
+                    <input type="text" id="rotatePagesInput" placeholder="All pages (or e.g. 1, 3-4)">
+                </div>
+                <button type="button" class="primary-btn green" onclick="runRotatePdf()">🔄 Rotate &amp; Download</button>
+            </div>
+        </div>
+
+        <!-- PANEL 6: EXTRACT TEXT -->
+        <div id="panel-extract" class="tool-panel hidden">
+            <div class="dropzone" onclick="document.getElementById('extractPdfInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'extractPdfInput')">
+                <div class="dropzone-icon">📝</div>
+                <div class="dropzone-title">Select or Drop a PDF to Extract Text</div>
+                <div class="dropzone-sub" id="extractFileLabel">Pull all selectable text from your PDF</div>
+                <input type="file" id="extractPdfInput" accept="application/pdf" class="hidden">
+            </div>
+
+            <div class="options-bar" style="justify-content: space-between;">
+                <button type="button" class="primary-btn" onclick="runExtractText()">📝 Extract Text</button>
+                <div style="display:flex; gap:8px;">
+                    <button type="button" class="primary-btn" onclick="copyExtractedText()">📋 Copy</button>
+                    <button type="button" class="primary-btn green" onclick="downloadExtractedText()">⬇ .TXT</button>
+                </div>
+            </div>
+
+            <textarea id="extractedTextOutput" class="text-output" placeholder="Extracted PDF text will appear here..."></textarea>
+        </div>
+
+        <div class="copyright">
+            Made With ❤️ INDIA ~ Designed by <a href="https://proshivamkushwaha.mahsua.com" target="_blank">SHIVAM KUSHWAHA</a> | © <a href="https://www.mahsua.com" target="_blank">MAHSUA</a>
+        </div>
+    </div>
+
+    <div id="messageBox" class="message-box"></div>
+
+    <script>
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
+        const modeIcon = document.getElementById('modeIcon');
+        const modeText = document.getElementById('modeText');
+        const messageBox = document.getElementById('messageBox');
+        let currentAppMode = localStorage.getItem('displayMode') || 'light';
+
+        let pdf2imgFile = null;
+        let renderedPages = []; // { pageNum, dataUrl, ext }
+        let img2pdfFiles = []; // { file, url }
+        let mergeFiles = []; // File[]
+        let splitFile = null;
+        let splitPageCount = 0;
+        let rotateFile = null;
+        let extractFile = null;
+
+        function applyAppMode(mode) {
+            currentAppMode = mode;
+            document.body.setAttribute('data-mode', mode);
+            localStorage.setItem('displayMode', mode);
+            modeIcon.textContent = mode === 'dark' ? '☀️' : '🌙';
+            modeText.textContent = mode === 'dark' ? 'Light Mode' : 'Dark Mode';
+        }
+
+        function toggleDarkMode() {
+            applyAppMode(currentAppMode === 'light' ? 'dark' : 'light');
+        }
+
+        function switchTool(toolId, btn) {
+            document.querySelectorAll('.tool-tab').forEach(t => t.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            document.querySelectorAll('.tool-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById(`panel-${toolId}`).classList.remove('hidden');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.currentTarget.classList.remove('dragover');
+        }
+
+        function handleDrop(e, inputId) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+            const input = document.getElementById(inputId);
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                const dt = new DataTransfer();
+                Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+                input.files = dt.files;
+                input.dispatchEvent(new Event('change'));
+            }
+        }
+
+        function formatBytes(bytes) {
+            if (bytes < 1024) return `${bytes} B`;
+            if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+            return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+        }
+
+        function displayMessage(msg, type = 'success') {
+            messageBox.textContent = msg;
+            messageBox.className = 'message-box show' + (type === 'error' ? ' error' : '');
+            setTimeout(() => messageBox.classList.remove('show'), 3000);
+        }
+
+        function triggerDownload(blobOrUrl, filename) {
+            const a = document.createElement('a');
+            if (typeof blobOrUrl === 'string') {
+                a.href = blobOrUrl;
+            } else {
+                a.href = URL.createObjectURL(blobOrUrl);
+            }
+            a.download = filename;
+            a.click();
+            if (typeof blobOrUrl !== 'string') {
+                setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+            }
+        }
+
+        function parsePageRanges(rangeStr, maxPages) {
+            if (!rangeStr.trim()) return Array.from({ length: maxPages }, (_, i) => i + 1);
+            const result = new Set();
+            rangeStr.split(',').forEach(part => {
+                const trimmed = part.trim();
+                if (!trimmed) return;
+                if (trimmed.includes('-')) {
+                    const [a, b] = trimmed.split('-').map(n => parseInt(n.trim(), 10));
+                    if (!isNaN(a) && !isNaN(b)) {
+                        const start = Math.max(1, Math.min(a, b));
+                        const end = Math.min(maxPages, Math.max(a, b));
+                        for (let i = start; i <= end; i++) result.add(i);
+                    }
+                } else {
+                    const n = parseInt(trimmed, 10);
+                    if (!isNaN(n) && n >= 1 && n <= maxPages) result.add(n);
+                }
+            });
+            return Array.from(result).sort((a, b) => a - b);
+        }
+
+        // 1. PDF TO IMAGE
+        document.getElementById('pdf2imgInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            pdf2imgFile = file;
+            document.getElementById('pdf2imgFileLabel').textContent = `Selected: ${file.name} (${formatBytes(file.size)})`;
+            renderedPages = [];
+            document.getElementById('pdf2imgResults').innerHTML = '';
+            document.getElementById('downloadAllImagesZipBtn').classList.add('hidden');
+        });
+
+        async function runPdfToImage() {
+            if (!pdf2imgFile) {
+                displayMessage('Please select a PDF file first.', 'error');
+                return;
+            }
+            const btn = document.getElementById('convertPdf2ImgBtn');
+            btn.disabled = true;
+            btn.textContent = 'Converting...';
+
+            try {
+                const buf = await pdf2imgFile.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+                const format = document.getElementById('imgFormatSelect').value;
+                const ext = format === 'image/jpeg' ? 'jpg' : 'png';
+                const scale = parseFloat(document.getElementById('imgScaleSelect').value) || 2;
+
+                const grid = document.getElementById('pdf2imgResults');
+                grid.innerHTML = '';
+                renderedPages = [];
+
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const viewport = page.getViewport({ scale });
+                    const canvas = document.createElement('canvas');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+
+                    const dataUrl = canvas.toDataURL(format, 0.92);
+                    renderedPages.push({ pageNum, dataUrl, ext });
+
+                    const card = document.createElement('div');
+                    card.className = 'page-card';
+                    card.innerHTML = `
+                        <img src="${dataUrl}" alt="Page ${pageNum}">
+                        <div class="page-card-footer">
+                            <span>Page ${pageNum}</span>
+                            <button type="button" class="mini-btn" onclick="triggerDownload('${dataUrl}', 'page-${pageNum}.${ext}')">⬇ Save</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+
+                document.getElementById('downloadAllImagesZipBtn').classList.remove('hidden');
+                displayMessage(`Converted ${pdf.numPages} page(s)!`);
+            } catch (err) {
+                console.error(err);
+                displayMessage('Could not read that PDF file.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Convert Pages';
+            }
+        }
+
+        async function downloadAllImagesZip() {
+            if (!renderedPages.length || typeof JSZip === 'undefined') return;
+            const zip = new JSZip();
+            renderedPages.forEach(p => {
+                const base64 = p.dataUrl.split(',')[1];
+                zip.file(`page-${p.pageNum}.${p.ext}`, base64, { base64: true });
+            });
+            const blob = await zip.generateAsync({ type: 'blob' });
+            triggerDownload(blob, 'mahsua-pdf-images.zip');
+        }
+
+        // 2. IMAGE TO PDF
+        document.getElementById('img2pdfInput').addEventListener('change', (e) => {
+            const files = Array.from(e.target.files || []);
+            files.forEach(file => {
+                img2pdfFiles.push({ file, url: URL.createObjectURL(file) });
+            });
+            e.target.value = '';
+            renderImg2PdfQueue();
+        });
+
+        function renderImg2PdfQueue() {
+            const list = document.getElementById('img2pdfQueue');
+            list.innerHTML = '';
+            img2pdfFiles.forEach((item, idx) => {
+                const row = document.createElement('div');
+                row.className = 'queue-item';
+                row.innerHTML = `
+                    <div class="queue-info">
+                        <img src="${item.url}" class="queue-thumb" alt="">
+                        <div style="min-width:0;">
+                            <div class="queue-name">${item.file.name}</div>
+                            <div class="queue-meta">${formatBytes(item.file.size)}</div>
+                        </div>
+                    </div>
+                    <div class="queue-actions">
+                        <button type="button" class="mini-btn" onclick="moveImgItem(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>↑</button>
+                        <button type="button" class="mini-btn" onclick="moveImgItem(${idx}, 1)" ${idx === img2pdfFiles.length - 1 ? 'disabled' : ''}>↓</button>
+                        <button type="button" class="mini-btn danger" onclick="removeImgItem(${idx})">✕</button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function moveImgItem(idx, dir) {
+            const target = idx + dir;
+            if (target < 0 || target >= img2pdfFiles.length) return;
+            [img2pdfFiles[idx], img2pdfFiles[target]] = [img2pdfFiles[target], img2pdfFiles[idx]];
+            renderImg2PdfQueue();
+        }
+
+        function removeImgItem(idx) {
+            URL.revokeObjectURL(img2pdfFiles[idx].url);
+            img2pdfFiles.splice(idx, 1);
+            renderImg2PdfQueue();
+        }
+
+        function fileToPngBytes(file) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    canvas.getContext('2d').drawImage(img, 0, 0);
+                    canvas.toBlob(blob => {
+                        blob.arrayBuffer().then(resolve).catch(reject);
+                    }, 'image/png');
+                };
+                img.onerror = reject;
+                img.src = URL.createObjectURL(file);
+            });
+        }
+
+        async function runImageToPdf() {
+            if (!img2pdfFiles.length) {
+                displayMessage('Please add at least one image.', 'error');
+                return;
+            }
+            try {
+                const { PDFDocument, PageSizes } = PDFLib;
+                const pdfDoc = await PDFDocument.create();
+                const pageMode = document.getElementById('pdfPageSizeSelect').value;
+
+                for (const item of img2pdfFiles) {
+                    const buf = await item.file.arrayBuffer();
+                    let embedded;
+                    if (item.file.type === 'image/jpeg') {
+                        embedded = await pdfDoc.embedJpg(buf);
+                    } else if (item.file.type === 'image/png') {
+                        embedded = await pdfDoc.embedPng(buf);
+                    } else {
+                        const pngBuf = await fileToPngBytes(item.file);
+                        embedded = await pdfDoc.embedPng(pngBuf);
+                    }
+
+                    const { width: iw, height: ih } = embedded.scale(1);
+                    if (pageMode === 'fit') {
+                        const page = pdfDoc.addPage([iw, ih]);
+                        page.drawImage(embedded, { x: 0, y: 0, width: iw, height: ih });
+                    } else {
+                        const base = pageMode === 'letter' ? PageSizes.Letter : PageSizes.A4;
+                        const isLandscape = iw > ih;
+                        const pw = isLandscape ? base[1] : base[0];
+                        const ph = isLandscape ? base[0] : base[1];
+                        const margin = 24;
+                        const scale = Math.min((pw - margin * 2) / iw, (ph - margin * 2) / ih);
+                        const dw = iw * scale;
+                        const dh = ih * scale;
+                        const page = pdfDoc.addPage([pw, ph]);
+                        page.drawImage(embedded, {
+                            x: (pw - dw) / 2,
+                            y: (ph - dh) / 2,
+                            width: dw,
+                            height: dh
+                        });
+                    }
+                }
+
+                const pdfBytes = await pdfDoc.save();
+                triggerDownload(new Blob([pdfBytes], { type: 'application/pdf' }), 'mahsua-images.pdf');
+                displayMessage('PDF created from images!');
+            } catch (err) {
+                console.error(err);
+                displayMessage('Failed to create PDF from images.', 'error');
+            }
+        }
+
+        // 3. MERGE PDF
+        document.getElementById('mergePdfInput').addEventListener('change', (e) => {
+            const files = Array.from(e.target.files || []);
+            mergeFiles.push(...files);
+            e.target.value = '';
+            renderMergeQueue();
+        });
+
+        function renderMergeQueue() {
+            const list = document.getElementById('mergeQueue');
+            list.innerHTML = '';
+            mergeFiles.forEach((file, idx) => {
+                const row = document.createElement('div');
+                row.className = 'queue-item';
+                row.innerHTML = `
+                    <div class="queue-info">
+                        <span style="font-size:1.35rem;">📄</span>
+                        <div style="min-width:0;">
+                            <div class="queue-name">${file.name}</div>
+                            <div class="queue-meta">${formatBytes(file.size)}</div>
+                        </div>
+                    </div>
+                    <div class="queue-actions">
+                        <button type="button" class="mini-btn" onclick="moveMergeItem(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>↑</button>
+                        <button type="button" class="mini-btn" onclick="moveMergeItem(${idx}, 1)" ${idx === mergeFiles.length - 1 ? 'disabled' : ''}>↓</button>
+                        <button type="button" class="mini-btn danger" onclick="removeMergeItem(${idx})">✕</button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function moveMergeItem(idx, dir) {
+            const target = idx + dir;
+            if (target < 0 || target >= mergeFiles.length) return;
+            [mergeFiles[idx], mergeFiles[target]] = [mergeFiles[target], mergeFiles[idx]];
+            renderMergeQueue();
+        }
+
+        function removeMergeItem(idx) {
+            mergeFiles.splice(idx, 1);
+            renderMergeQueue();
+        }
+
+        async function runMergePdf() {
+            if (mergeFiles.length < 2) {
+                displayMessage('Please add at least 2 PDF files to merge.', 'error');
+                return;
+            }
+            try {
+                const { PDFDocument } = PDFLib;
+                const merged = await PDFDocument.create();
+                for (const file of mergeFiles) {
+                    const src = await PDFDocument.load(await file.arrayBuffer());
+                    const copied = await merged.copyPages(src, src.getPageIndices());
+                    copied.forEach(p => merged.addPage(p));
+                }
+                const bytes = await merged.save();
+                triggerDownload(new Blob([bytes], { type: 'application/pdf' }), 'mahsua-merged.pdf');
+                displayMessage('PDFs merged successfully!');
+            } catch (err) {
+                console.error(err);
+                displayMessage('Failed to merge PDFs.', 'error');
+            }
+        }
+
+        // 4. SPLIT PDF
+        document.getElementById('splitPdfInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            splitFile = file;
+            try {
+                const doc = await PDFLib.PDFDocument.load(await file.arrayBuffer());
+                splitPageCount = doc.getPageCount();
+                document.getElementById('splitFileLabel').textContent = `Selected: ${file.name} (${splitPageCount} pages)`;
+            } catch {
+                displayMessage('Invalid PDF file.', 'error');
+            }
+        });
+
+        async function runSplitRange() {
+            if (!splitFile) {
+                displayMessage('Please select a PDF file first.', 'error');
+                return;
+            }
+            try {
+                const { PDFDocument } = PDFLib;
+                const src = await PDFDocument.load(await splitFile.arrayBuffer());
+                const pages = parsePageRanges(document.getElementById('splitRangeInput').value, src.getPageCount());
+                if (!pages.length) {
+                    displayMessage('No valid page numbers found in range.', 'error');
+                    return;
+                }
+                const out = await PDFDocument.create();
+                const copied = await out.copyPages(src, pages.map(p => p - 1));
+                copied.forEach(p => out.addPage(p));
+                const bytes = await out.save();
+                triggerDownload(new Blob([bytes], { type: 'application/pdf' }), 'mahsua-split.pdf');
+                displayMessage(`Extracted ${pages.length} page(s)!`);
+            } catch (err) {
+                console.error(err);
+                displayMessage('Failed to split PDF.', 'error');
+            }
+        }
+
+        async function runSplitAllPagesZip() {
+            if (!splitFile || typeof JSZip === 'undefined') {
+                displayMessage('Please select a PDF file first.', 'error');
+                return;
+            }
+            try {
+                const { PDFDocument } = PDFLib;
+                const src = await PDFDocument.load(await splitFile.arrayBuffer());
+                const zip = new JSZip();
+                const count = src.getPageCount();
+                for (let i = 0; i < count; i++) {
+                    const single = await PDFDocument.create();
+                    const [page] = await single.copyPages(src, [i]);
+                    single.addPage(page);
+                    const bytes = await single.save();
+                    zip.file(`page-${i + 1}.pdf`, bytes);
+                }
+                const blob = await zip.generateAsync({ type: 'blob' });
+                triggerDownload(blob, 'mahsua-split-pages.zip');
+                displayMessage(`Split into ${count} PDF files!`);
+            } catch (err) {
+                console.error(err);
+                displayMessage('Failed to split pages.', 'error');
+            }
+        }
+
+        // 5. ROTATE PDF
+        document.getElementById('rotatePdfInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            rotateFile = file;
+            try {
+                const doc = await PDFLib.PDFDocument.load(await file.arrayBuffer());
+                document.getElementById('rotateFileLabel').textContent = `Selected: ${file.name} (${doc.getPageCount()} pages)`;
+            } catch {
+                displayMessage('Invalid PDF file.', 'error');
+            }
+        });
+
+        async function runRotatePdf() {
+            if (!rotateFile) {
+                displayMessage('Please select a PDF file first.', 'error');
+                return;
+            }
+            try {
+                const { PDFDocument, degrees } = PDFLib;
+                const doc = await PDFDocument.load(await rotateFile.arrayBuffer());
+                const angle = parseInt(document.getElementById('rotateAngleSelect').value, 10) || 90;
+                const targetPages = parsePageRanges(document.getElementById('rotatePagesInput').value, doc.getPageCount());
+                targetPages.forEach(pNum => {
+                    const page = doc.getPage(pNum - 1);
+                    const currentRot = page.getRotation().angle;
+                    page.setRotation(degrees((currentRot + angle) % 360));
+                });
+                const bytes = await doc.save();
+                triggerDownload(new Blob([bytes], { type: 'application/pdf' }), 'mahsua-rotated.pdf');
+                displayMessage(`Rotated ${targetPages.length} page(s)!`);
+            } catch (err) {
+                console.error(err);
+                displayMessage('Failed to rotate PDF.', 'error');
+            }
+        }
+
+        // 6. EXTRACT TEXT
+        document.getElementById('extractPdfInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            extractFile = file;
+            document.getElementById('extractFileLabel').textContent = `Selected: ${file.name} (${formatBytes(file.size)})`;
+        });
+
+        async function runExtractText() {
+            if (!extractFile) {
+                displayMessage('Please select a PDF file first.', 'error');
+                return;
+            }
+            try {
+                const buf = await extractFile.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+                const parts = [];
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const content = await page.getTextContent();
+                    const text = content.items.map(item => item.str).join(' ');
+                    parts.push(`--- Page ${i} ---\n${text}`);
+                }
+                document.getElementById('extractedTextOutput').value = parts.join('\n\n');
+                displayMessage(`Extracted text from ${pdf.numPages} page(s)!`);
+            } catch (err) {
+                console.error(err);
+                displayMessage('Failed to extract text from PDF.', 'error');
+            }
+        }
+
+        function copyExtractedText() {
+            const txt = document.getElementById('extractedTextOutput').value;
+            if (!txt.trim()) return;
+            navigator.clipboard.writeText(txt).then(() => displayMessage('Text copied to clipboard!'));
+        }
+
+        function downloadExtractedText() {
+            const txt = document.getElementById('extractedTextOutput').value;
+            if (!txt.trim()) return;
+            triggerDownload(new Blob([txt], { type: 'text/plain;charset=utf-8' }), 'extracted-text.txt');
+        }
+
+        window.onload = function() {
+            applyAppMode(currentAppMode);
+        };
+    </script>
+</body>
+</html>

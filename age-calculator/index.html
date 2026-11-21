@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="appTitle">Age Calculator - Mahsua Apps</title>
-    <link rel="icon" href="./favicon.png" type="image/svg+xml">
+    <link rel="icon" href="../favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-        <!-- Google Ads -->
+    <!-- Google Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-9351361840615541">
     <!-- Google tag (gtag.js) -->
@@ -24,28 +24,34 @@
             box-sizing: border-box;
         }
 
-        /* Define CSS variables for Pink, Blue, Green theme */
         :root {
             /* Light Mode - Pink, Blue, Green Theme */
             --bg-gradient-start: #ffe6f0;
             --bg-gradient-middle: #e0f3ff;
             --bg-gradient-end: #e6ffe6;
-            --container-bg: rgba(255, 255, 255, 0.95);
-            --text-color: #2d3748;
-            --label-color: #4a5568;
-            --input-border: rgba(236, 72, 153, 0.3);
+            --container-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-color: #1f2937;
+            --label-color: #4b5563;
+            --muted-color: #6b7280;
+            --input-bg: rgba(255, 255, 255, 0.96);
+            --input-border: rgba(236, 72, 153, 0.28);
             --input-focus-border: #ec489a;
-            --input-text-color: #2d3748;
+            --input-text-color: #1f2937;
             --button-bg: linear-gradient(135deg, #ec489a, #3b82f6);
             --button-hover-bg: linear-gradient(135deg, #db2777, #2563eb);
-            --button-shadow: rgba(236, 72, 153, 0.3);
+            --button-green-bg: linear-gradient(135deg, #22c55e, #3b82f6);
+            --button-shadow: rgba(236, 72, 153, 0.28);
             --result-border: rgba(236, 72, 153, 0.2);
-            --result-item-bg: rgba(255, 255, 255, 0.8);
-            --result-item-text: #4a5568;
-            --result-item-strong-text: #1f2937;
-            --happy-birthday-bg: linear-gradient(135deg, #ffe0f0, #ffe6f0);
-            --happy-birthday-text: #ec489a;
-            --happy-birthday-border: #fbc4d0;
+            --result-item-bg: rgba(255, 255, 255, 0.82);
+            --result-item-text: #4b5563;
+            --result-item-strong-text: #111827;
+            --chip-bg: rgba(236, 72, 153, 0.08);
+            --chip-border: rgba(236, 72, 153, 0.22);
+            --chip-text: #be185d;
+            --happy-birthday-bg: linear-gradient(135deg, #ffe0f0, #e0f3ff);
+            --happy-birthday-text: #db2777;
+            --happy-birthday-border: #f9a8d4;
             --message-box-bg: #fff3e0;
             --message-box-text: #e67e22;
             --message-box-border: #ffd7a8;
@@ -53,30 +59,33 @@
             --message-box-error-text: #dc2626;
             --message-box-error-border: #fecaca;
             --quote-bg: linear-gradient(135deg, #e6ffe6, #f0fdf4);
-            --quote-text: #22c55e;
+            --quote-text: #15803d;
             --quote-border: #bbf7d0;
-            --glass-border: rgba(236, 72, 153, 0.2);
+            --glass-border: rgba(236, 72, 153, 0.22);
+            --live-dot: #22c55e;
         }
 
-        /* Dark Mode - Pink, Blue, Green Theme */
         [data-mode="dark"] {
             --bg-gradient-start: #1a1a2e;
             --bg-gradient-middle: #16213e;
             --bg-gradient-end: #0f3460;
-            --container-bg: rgba(30, 41, 59, 0.95);
-            --text-color: #e2e8f0;
-            --label-color: #94a3b8;
-            --input-border: rgba(236, 72, 153, 0.3);
+            --container-bg: rgba(20, 30, 48, 0.94);
+            --card-bg: rgba(30, 41, 59, 0.85);
+            --text-color: #f1f5f9;
+            --label-color: #cbd5e1;
+            --muted-color: #94a3b8;
+            --input-bg: rgba(15, 23, 42, 0.85);
+            --input-border: rgba(236, 72, 153, 0.35);
             --input-focus-border: #ec489a;
-            --input-text-color: #e2e8f0;
-            --button-bg: linear-gradient(135deg, #ec489a, #3b82f6);
-            --button-hover-bg: linear-gradient(135deg, #db2777, #2563eb);
-            --button-shadow: rgba(236, 72, 153, 0.3);
-            --result-border: rgba(236, 72, 153, 0.2);
-            --result-item-bg: rgba(51, 65, 85, 0.8);
+            --input-text-color: #f1f5f9;
+            --result-border: rgba(236, 72, 153, 0.25);
+            --result-item-bg: rgba(30, 41, 59, 0.85);
             --result-item-text: #cbd5e1;
-            --result-item-strong-text: #f1f5f9;
-            --happy-birthday-bg: linear-gradient(135deg, #4a1f2e, #3b1e2a);
+            --result-item-strong-text: #ffffff;
+            --chip-bg: rgba(236, 72, 153, 0.16);
+            --chip-border: rgba(236, 72, 153, 0.35);
+            --chip-text: #f9a8d4;
+            --happy-birthday-bg: linear-gradient(135deg, #4a1f2e, #1e293b);
             --happy-birthday-text: #f472b6;
             --happy-birthday-border: #ec4899;
             --message-box-bg: #4a3200;
@@ -85,69 +94,100 @@
             --message-box-error-bg: #631717;
             --message-box-error-text: #fca5a5;
             --message-box-error-border: #ef4444;
-            --quote-bg: linear-gradient(135deg, #1f3a2d, #2d3a2a);
+            --quote-bg: linear-gradient(135deg, #143325, #1e293b);
             --quote-text: #34d399;
             --quote-border: #10b981;
-            --glass-border: rgba(236, 72, 153, 0.2);
+            --glass-border: rgba(236, 72, 153, 0.25);
         }
 
         body {
             font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-middle) 50%, var(--bg-gradient-end) 100%);
+            color: var(--text-color);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 80px 20px 20px 20px;
-            transition: all 0.3s ease;
+            padding: 76px 16px 32px;
+            transition: background 0.3s ease, color 0.3s ease;
             position: relative;
         }
 
-        /* Glass grid background pattern */
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            inset: 0;
             pointer-events: none;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(236, 72, 153, 0.08) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1px, transparent 1px),
                 radial-gradient(circle at top left, rgba(236, 72, 153, 0.12), transparent 28%),
                 radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.1), transparent 26%);
             background-size: 26px 26px, 26px 26px, 100% 100%, 100% 100%;
-            background-position: 0 0, 0 0, 0 0, 0 0;
             z-index: 0;
+        }
+
+        /* Top bar buttons */
+        .top-bar {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .top-pill-btn {
+            pointer-events: auto;
+            padding: 0.6rem 1.1rem;
+            background: var(--container-bg);
+            backdrop-filter: blur(20px);
+            color: var(--text-color);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .top-pill-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(236, 72, 153, 0.2);
         }
 
         .container {
             background-color: var(--container-bg);
             backdrop-filter: blur(20px);
-            padding: 2.5rem;
+            padding: 2.25rem;
             border-radius: 32px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
             width: 100%;
-            max-width: 550px;
-            text-align: center;
+            max-width: 600px;
             border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
             position: relative;
             z-index: 1;
-            animation: riseIn 0.7s ease-out;
+            animation: riseIn 0.6s ease-out;
         }
 
         @keyframes riseIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-row {
+            text-align: center;
+            margin-bottom: 1.5rem;
         }
 
         h1 {
@@ -155,94 +195,552 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             font-weight: 800;
-            margin-bottom: 1.5rem;
             letter-spacing: -0.5px;
+            margin-bottom: 0.35rem;
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--label-color);
+        .subtitle {
+            color: var(--muted-color);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .language-selector {
+            display: inline-flex;
+            gap: 0.5rem;
+            padding: 4px;
+            background: var(--result-item-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+        }
+
+        .language-selector button {
+            padding: 0.45rem 1rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            text-align: left;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        input[type="date"] {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--input-border);
-            border-radius: 20px;
-            font-size: 1rem;
-            color: var(--input-text-color);
-            background-color: var(--container-bg);
-            transition: all 0.3s ease;
+            border-radius: 50px;
+            background: transparent;
+            color: var(--label-color);
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
             font-family: 'Outfit', sans-serif;
         }
 
-        input[type="date"]:focus {
+        .language-selector button.active {
+            background: var(--button-bg);
+            color: #ffffff;
+            box-shadow: 0 3px 10px var(--button-shadow);
+        }
+
+        /* DOB Input Card */
+        .dob-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 1.25rem;
+            margin-bottom: 1.15rem;
+        }
+
+        .dob-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .section-label {
+            color: var(--label-color);
+            font-weight: 700;
+            font-size: 0.92rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .entry-mode-tabs {
+            display: inline-flex;
+            gap: 4px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 50px;
+            padding: 3px;
+        }
+
+        .entry-mode-btn {
+            border: none;
+            background: transparent;
+            color: var(--muted-color);
+            font-size: 0.76rem;
+            font-weight: 600;
+            padding: 0.3rem 0.7rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .entry-mode-btn.active {
+            background: var(--button-bg);
+            color: #ffffff;
+        }
+
+        /* Fast DD / MM / YYYY segmented input */
+        .quick-date-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.45fr auto;
+            gap: 0.6rem;
+            align-items: end;
+        }
+
+        .field-box label {
+            display: block;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--muted-color);
+            margin-bottom: 0.3rem;
+            text-align: left;
+            padding-left: 0.25rem;
+        }
+
+        .field-input,
+        .field-select {
+            width: 100%;
+            padding: 0.8rem 0.75rem;
+            border: 1.5px solid var(--input-border);
+            border-radius: 16px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--input-text-color);
+            background-color: var(--input-bg);
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .field-select {
+            text-align: left;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ec489a' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 6.646a.5.5 0 0 1 .708 0L8 9.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            padding-right: 2rem;
+        }
+
+        .field-input:focus,
+        .field-select:focus,
+        .native-date-input:focus {
             outline: none;
             border-color: var(--input-focus-border);
-            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2);
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.18);
+        }
+
+        .calendar-trigger-wrap {
+            position: relative;
+        }
+
+        .calendar-icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            border: 1.5px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-icon-btn:hover {
+            border-color: var(--input-focus-border);
+            transform: translateY(-1px);
+        }
+
+        .hidden-native-picker {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Dropdown mode row */
+        .dropdown-date-row {
+            display: grid;
+            grid-template-columns: 0.9fr 1.4fr 1.1fr auto;
+            gap: 0.6rem;
+            align-items: end;
+        }
+
+        /* Quick decade helper pills */
+        .decade-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.75rem;
+            align-items: center;
+        }
+
+        .decade-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted-color);
+            margin-right: 0.2rem;
+        }
+
+        .chip-btn {
+            padding: 0.28rem 0.65rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 50px;
+            background: var(--chip-bg);
+            border: 1px solid var(--chip-border);
+            color: var(--chip-text);
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .chip-btn:hover {
+            background: var(--button-bg);
+            color: #ffffff;
+            border-color: transparent;
+        }
+
+        .dob-preview-badge {
+            margin-top: 0.7rem;
+            font-size: 0.84rem;
+            color: var(--muted-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .dob-preview-badge strong {
+            color: var(--text-color);
+        }
+
+        .clear-link {
+            background: none;
+            border: none;
+            color: #ec489a;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Optional As-Of collapsible */
+        .as-of-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.7rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            font-size: 0.88rem;
+        }
+
+        .as-of-toggle label {
+            color: var(--label-color);
+            font-weight: 600;
+        }
+
+        .native-date-input {
+            padding: 0.45rem 0.75rem;
+            border: 1.5px solid var(--input-border);
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--input-text-color);
+            background: var(--input-bg);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Action Buttons */
+        .action-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.75rem;
         }
 
         .calculateButton {
             width: 100%;
-            padding: 1rem 1.5rem;
+            padding: 0.95rem 1.5rem;
             background: var(--button-bg);
             color: white;
             border: none;
-            border-radius: 24px;
+            border-radius: 20px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px var(--button-shadow);
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 18px var(--button-shadow);
             font-family: 'Outfit', sans-serif;
         }
 
         .calculateButton:hover {
             background: var(--button-hover-bg);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--button-shadow);
+            box-shadow: 0 10px 24px var(--button-shadow);
         }
 
-        .calculateButton:active {
-            transform: translateY(0);
+        .save-track-btn {
+            padding: 0.95rem 1.15rem;
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1.5px solid var(--input-border);
+            border-radius: 20px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Outfit', sans-serif;
+            white-space: nowrap;
         }
 
+        .save-track-btn:hover {
+            border-color: #22c55e;
+            color: #16a34a;
+            transform: translateY(-2px);
+        }
+
+        /* Save Profile Modal/Inline Drawer */
+        .save-drawer {
+            margin-top: 0.9rem;
+            padding: 0.9rem;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            animation: riseIn 0.25s ease-out;
+        }
+
+        .save-drawer input {
+            flex: 1;
+            padding: 0.65rem 0.9rem;
+            border-radius: 14px;
+            border: 1.5px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--input-text-color);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.92rem;
+        }
+
+        .save-drawer button {
+            padding: 0.65rem 1rem;
+            border-radius: 14px;
+            border: none;
+            background: var(--button-green-bg);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Saved Tracked DOBs Section */
+        .tracked-section {
+            margin-top: 1.25rem;
+            padding-top: 1.1rem;
+            border-top: 1px solid var(--result-border);
+        }
+
+        .tracked-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.7rem;
+        }
+
+        .tracked-header h3 {
+            font-size: 0.95rem;
+            color: var(--label-color);
+            font-weight: 700;
+        }
+
+        .tracked-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+
+        .tracked-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--result-item-bg);
+            border: 1px solid var(--result-border);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            gap: 0.75rem;
+        }
+
+        .tracked-item:hover {
+            border-color: var(--input-focus-border);
+            transform: translateY(-1px);
+        }
+
+        .tracked-info {
+            text-align: left;
+        }
+
+        .tracked-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--result-item-strong-text);
+        }
+
+        .tracked-meta {
+            font-size: 0.8rem;
+            color: var(--muted-color);
+        }
+
+        .tracked-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tracked-badge {
+            font-size: 0.76rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 50px;
+            background: var(--chip-bg);
+            color: var(--chip-text);
+            white-space: nowrap;
+        }
+
+        .delete-track-btn {
+            background: none;
+            border: none;
+            color: var(--muted-color);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.2rem 0.35rem;
+            border-radius: 8px;
+        }
+
+        .delete-track-btn:hover {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Results Section */
         .result-section {
-            margin-top: 2rem;
+            margin-top: 1.75rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--result-border);
             text-align: left;
-            animation: riseIn 0.5s ease-out;
+            animation: riseIn 0.45s ease-out;
+        }
+
+        .hero-age-card {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(59, 130, 246, 0.12), rgba(34, 197, 94, 0.1));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 1.35rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .hero-age-top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--muted-color);
+            margin-bottom: 0.4rem;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: #16a34a;
+            background: rgba(34, 197, 94, 0.14);
+            padding: 0.18rem 0.55rem;
+            border-radius: 50px;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--live-dot);
+            animation: pulseDot 1.4s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.45; transform: scale(0.8); }
+        }
+
+        .hero-age-value {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: var(--result-item-strong-text);
+            line-height: 1.3;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
         }
 
         .result-item {
-            margin-bottom: 1rem;
             background-color: var(--result-item-bg);
             backdrop-filter: blur(10px);
             padding: 1rem;
             border-radius: 20px;
             border: 1px solid var(--result-border);
-            transition: all 0.3s ease;
         }
 
-        .result-item p {
-            margin: 0;
+        .result-item h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--muted-color);
+            margin-bottom: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .stat-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.24rem 0;
+            font-size: 0.92rem;
             color: var(--result-item-text);
-            font-size: 0.95rem;
-            line-height: 1.6;
         }
 
-        .result-item strong {
+        .stat-line strong {
             color: var(--result-item-strong-text);
             font-weight: 700;
+            font-variant-numeric: tabular-nums;
         }
 
         .happy-birthday {
@@ -250,11 +748,64 @@
             color: var(--happy-birthday-text);
             padding: 1rem;
             border-radius: 20px;
-            font-weight: 700;
-            margin-top: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
             border: 1px solid var(--happy-birthday-border);
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
+        }
+
+        .motivational-quote {
+            margin-top: 0.5rem;
+            padding: 1.25rem;
+            background: var(--quote-bg);
+            color: var(--quote-text);
+            border-radius: 22px;
+            border: 1px solid var(--quote-border);
+            font-style: italic;
+            font-size: 0.94rem;
+            line-height: 1.6;
+            position: relative;
+            padding-bottom: 3.1rem;
+        }
+
+        .quote-actions {
+            position: absolute;
+            bottom: 0.85rem;
+            right: 0.95rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .quote-actions button {
+            padding: 0.42rem 0.9rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border-radius: 50px;
+            background: var(--button-bg);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .quote-actions button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--button-shadow);
+        }
+
+        .copyright {
+            margin-top: 1.35rem;
+            font-size: 0.78rem;
+            text-align: center;
+            color: var(--muted-color);
+        }
+
+        .copyright a {
+            color: #ec489a;
+            text-decoration: none;
+            font-weight: 600;
         }
 
         .message-box {
@@ -264,16 +815,16 @@
             transform: translateX(-50%);
             background-color: var(--message-box-bg);
             color: var(--message-box-text);
-            padding: 1rem 1.5rem;
+            padding: 0.85rem 1.4rem;
             border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
             border: 1px solid var(--message-box-border);
-            font-weight: 500;
-            font-size: 0.9rem;
+            font-weight: 600;
+            font-size: 0.88rem;
         }
 
         .message-box.show {
@@ -287,219 +838,201 @@
             border-color: var(--message-box-error-border);
         }
 
-        /* Motivational Quote Section */
-        .motivational-quote {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background: var(--quote-bg);
-            color: var(--quote-text);
-            border-radius: 24px;
-            border: 1px solid var(--quote-border);
-            font-style: italic;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            transition: all 0.3s ease;
-            position: relative;
-            padding-bottom: 3rem;
-        }
-
-        .motivational-quote p {
-            margin: 0;
-        }
-
-        .motivational-quote strong {
-            display: block;
-            margin-top: 0.5rem;
-            font-weight: 600;
-            font-style: normal;
-            font-size: 0.85rem;
-            opacity: 0.8;
-        }
-
-        /* Dark mode toggle button */
-        .mode-toggle-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 0.75rem 1.25rem;
-            background: var(--container-bg);
-            backdrop-filter: blur(20px);
-            color: var(--text-color);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            z-index: 100;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .mode-toggle-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);
-        }
-
-        /* Language selection buttons */
-        .language-selector {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .language-selector button {
-            padding: 0.6rem 1.2rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 50px;
-            background-color: rgba(255, 255, 255, 0.8);
-            color: #4b5563;
-            border: 1px solid var(--glass-border);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        [data-mode="dark"] .language-selector button {
-            background-color: rgba(51, 65, 85, 0.8);
-            color: #cbd5e1;
-        }
-
-        .language-selector button:hover {
-            transform: translateY(-2px);
-        }
-
-        .language-selector button.active {
-            background: var(--button-bg);
-            color: white;
-            border-color: transparent;
-        }
-
-        /* Quote actions buttons */
-        .quote-actions {
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .quote-actions button {
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border-radius: 50px;
-            background: var(--button-bg);
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Outfit', sans-serif;
-        }
-
-        .quote-actions button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--button-shadow);
-        }
-
-        /* Copyright */
-        .copyright {
-            margin-top: 1.5rem;
-            font-size: 0.75rem;
-            text-align: center;
-            color: var(--label-color);
-        }
-
-        .copyright a {
-            color: #ec489a;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .copyright a:hover {
-            color: #3b82f6;
-        }
-
         .hidden {
-            display: none;
+            display: none !important;
         }
 
-        /* Responsive */
-        @media (max-width: 640px) {
+        @media (max-width: 600px) {
             body {
-                padding: 70px 16px 20px 16px;
+                padding: 68px 12px 24px;
             }
-            
+
             .container {
-                padding: 1.5rem;
+                padding: 1.35rem;
+                border-radius: 24px;
             }
-            
+
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.85rem;
             }
-            
-            .mode-toggle-btn {
-                top: 12px;
-                right: 12px;
-                padding: 0.5rem 1rem;
-                font-size: 0.8rem;
+
+            .quick-date-row,
+            .dropdown-date-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .quick-date-row .year-field,
+            .dropdown-date-row .year-field {
+                grid-column: span 1;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-row {
+                grid-template-columns: 1fr;
+            }
+
+            .as-of-toggle {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <button id="modeToggleBtn" class="mode-toggle-btn" onclick="toggleDarkMode()">
-        <span id="modeIcon">🌙</span> <span id="modeText">Dark Mode</span>
-    </button>
+    <div class="top-bar">
+        <a href="https://apps.mahsua.com/" class="top-pill-btn" id="homeBtn">
+            <span>🏠</span> <span id="homeText">Mahsua Apps</span>
+        </a>
+        <button id="modeToggleBtn" class="top-pill-btn" onclick="toggleDarkMode()">
+            <span id="modeIcon">🌙</span> <span id="modeText">Dark Mode</span>
+        </button>
+    </div>
 
     <div class="container">
-        <h1 id="mainTitle">Age Calculator</h1>
-
-        <div class="language-selector">
-            <button id="langEnBtn" onclick="setLanguage('en')">English</button>
-            <button id="langHiBtn" onclick="setLanguage('hi')">हिंदी</button>
+        <div class="header-row">
+            <h1 id="mainTitle">Age Calculator</h1>
+            <p class="subtitle" id="mainSubtitle">Fast DOB entry &amp; live age tracking</p>
+            <div class="language-selector">
+                <button id="langEnBtn" onclick="setLanguage('en')">English</button>
+                <button id="langHiBtn" onclick="setLanguage('hi')">हिंदी</button>
+            </div>
         </div>
 
-        <div class="input-group">
-            <label for="birthdate" id="birthdateLabel">Your Birthdate:</label>
-            <input type="date" id="birthdate" required>
+        <!-- Easy DOB Input Card -->
+        <div class="dob-card">
+            <div class="dob-header">
+                <span class="section-label" id="birthdateLabel">🎂 Date of Birth</span>
+                <div class="entry-mode-tabs">
+                    <button type="button" class="entry-mode-btn active" id="modeTypeBtn" onclick="switchEntryMode('type')">Type DD/MM/YYYY</button>
+                    <button type="button" class="entry-mode-btn" id="modeSelectBtn" onclick="switchEntryMode('select')">Select Lists</button>
+                </div>
+            </div>
+
+            <!-- Mode 1: Auto-advance numeric input -->
+            <div id="typeEntryRow" class="quick-date-row">
+                <div class="field-box">
+                    <label for="dobDayInput" id="dayInputLabel">Day</label>
+                    <input type="text" id="dobDayInput" class="field-input" inputmode="numeric" maxlength="2" placeholder="DD" autocomplete="bday-day">
+                </div>
+                <div class="field-box">
+                    <label for="dobMonthInput" id="monthInputLabel">Month</label>
+                    <input type="text" id="dobMonthInput" class="field-input" inputmode="numeric" maxlength="2" placeholder="MM" autocomplete="bday-month">
+                </div>
+                <div class="field-box year-field">
+                    <label for="dobYearInput" id="yearInputLabel">Year</label>
+                    <input type="text" id="dobYearInput" class="field-input" inputmode="numeric" maxlength="4" placeholder="YYYY" autocomplete="bday-year">
+                </div>
+                <div class="calendar-trigger-wrap" title="Pick from calendar">
+                    <button type="button" class="calendar-icon-btn" aria-label="Open calendar picker">📅</button>
+                    <input type="date" id="birthdate" class="hidden-native-picker" aria-label="Calendar date picker">
+                </div>
+            </div>
+
+            <!-- Mode 2: Easy Dropdown Selectors -->
+            <div id="selectEntryRow" class="dropdown-date-row hidden">
+                <div class="field-box">
+                    <label for="dobDaySelect" id="daySelectLabel">Day</label>
+                    <select id="dobDaySelect" class="field-select"></select>
+                </div>
+                <div class="field-box">
+                    <label for="dobMonthSelect" id="monthSelectLabel">Month</label>
+                    <select id="dobMonthSelect" class="field-select"></select>
+                </div>
+                <div class="field-box year-field">
+                    <label for="dobYearSelect" id="yearSelectLabel">Year</label>
+                    <select id="dobYearSelect" class="field-select"></select>
+                </div>
+                <div class="calendar-trigger-wrap" title="Pick from calendar">
+                    <button type="button" class="calendar-icon-btn" aria-label="Open calendar picker">📅</button>
+                    <input type="date" id="birthdateSelectMirror" class="hidden-native-picker" aria-label="Calendar date picker">
+                </div>
+            </div>
+
+            <!-- Quick Decade Chips to jump fast in dropdown or fill year -->
+            <div class="decade-chips">
+                <span class="decade-label" id="quickYearLabel">Quick decade:</span>
+                <button type="button" class="chip-btn" onclick="jumpDecade(2020)">2020s</button>
+                <button type="button" class="chip-btn" onclick="jumpDecade(2010)">2010s</button>
+                <button type="button" class="chip-btn" onclick="jumpDecade(2000)">2000s</button>
+                <button type="button" class="chip-btn" onclick="jumpDecade(1990)">1990s</button>
+                <button type="button" class="chip-btn" onclick="jumpDecade(1980)">1980s</button>
+                <button type="button" class="chip-btn" onclick="jumpDecade(1970)">1970s</button>
+                <button type="button" class="chip-btn" onclick="jumpDecade(1960)">1960s</button>
+            </div>
+
+            <div class="dob-preview-badge">
+                <span id="dobPreviewText">Enter day, month, and 4-digit year</span>
+                <button type="button" class="clear-link hidden" id="clearDobBtn" onclick="clearDob()">Clear</button>
+            </div>
         </div>
 
-        <div class="input-group">
-            <label for="currentDate" id="currentDateLabel">Calculate Age As Of (Optional, defaults to today):</label>
-            <input type="date" id="currentDate">
+        <!-- Optional As-Of Date -->
+        <div class="as-of-toggle">
+            <label for="currentDate" id="currentDateLabel">Track Age As Of (Today by default):</label>
+            <input type="date" id="currentDate" class="native-date-input">
         </div>
 
-        <button id="calculateButton" class="calculateButton" onclick="calculateAge()">Calculate Age</button>
+        <!-- Action Buttons -->
+        <div class="action-row">
+            <button id="calculateButton" class="calculateButton" onclick="calculateAge(true)">Calculate &amp; Track Age</button>
+            <button type="button" id="openSaveBtn" class="save-track-btn" onclick="toggleSaveDrawer()">📌 Save DOB</button>
+        </div>
 
+        <!-- Save DOB Drawer -->
+        <div id="saveDrawer" class="save-drawer hidden">
+            <input type="text" id="profileNameInput" maxlength="30" placeholder="Name (e.g., Me, Mom, Alex)">
+            <button type="button" id="confirmSaveBtn" onclick="saveTrackedProfile()">Save</button>
+        </div>
+
+        <!-- Saved Tracked DOBs -->
+        <div id="trackedSection" class="tracked-section hidden">
+            <div class="tracked-header">
+                <h3 id="trackedTitle">📌 Tracked Birthdays</h3>
+            </div>
+            <div id="trackedList" class="tracked-list"></div>
+        </div>
+
+        <!-- Results Section -->
         <div id="results" class="result-section hidden">
-            <div class="result-item">
-                <p id="exactAgePrefix">Your exact age is: <strong id="ageYearsMonthsDays"></strong></p>
-            </div>
-            <div class="result-item">
-                <p id="totalTimeLived">Total time lived:</p>
-                <p><strong id="labelDays">Days:</strong> <span id="totalDays"></span></p>
-                <p><strong id="labelWeeks">Weeks:</strong> <span id="totalWeeks"></span></p>
-                <p><strong id="labelHours">Hours:</strong> <span id="totalHours"></span></p>
-                <p><strong id="labelMinutes">Minutes:</strong> <span id="totalMinutes"></span></p>
-                <p><strong id="labelSeconds">Seconds:</strong> <span id="totalSeconds"></span></p>
-            </div>
-            <div class="result-item">
-                <p id="timeUntilNextBirthday">Time until your next birthday:</p>
-                <p><strong id="labelNextDays">Days:</strong> <span id="nextBirthdayDays"></span></p>
-                <p><strong id="labelNextHours">Hours:</strong> <span id="nextBirthdayHours"></span></p>
-                <p><strong id="labelNextMinutes">Minutes:</strong> <span id="nextBirthdayMinutes"></span></p>
-                <p><strong id="labelNextSeconds">Seconds:</strong> <span id="nextBirthdaySeconds"></span></p>
-            </div>
             <div id="happyBirthdayMessage" class="happy-birthday hidden">
                 🥳 Happy Birthday! 🥳
             </div>
+
+            <div class="hero-age-card">
+                <div class="hero-age-top">
+                    <span id="exactAgePrefix">Your exact age is</span>
+                    <span id="liveBadge" class="live-indicator hidden">
+                        <span class="live-dot"></span>
+                        <span id="liveText">LIVE</span>
+                    </span>
+                </div>
+                <div class="hero-age-value" id="ageYearsMonthsDays"></div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="result-item">
+                    <h4 id="totalTimeLived">Total Time Lived</h4>
+                    <div class="stat-line"><span id="labelDays">Days</span> <strong id="totalDays"></strong></div>
+                    <div class="stat-line"><span id="labelWeeks">Weeks</span> <strong id="totalWeeks"></strong></div>
+                    <div class="stat-line"><span id="labelHours">Hours</span> <strong id="totalHours"></strong></div>
+                    <div class="stat-line"><span id="labelMinutes">Minutes</span> <strong id="totalMinutes"></strong></div>
+                    <div class="stat-line"><span id="labelSeconds">Seconds</span> <strong id="totalSeconds"></strong></div>
+                </div>
+
+                <div class="result-item">
+                    <h4 id="timeUntilNextBirthday">Next Birthday</h4>
+                    <div class="stat-line"><span id="labelNextDays">Days</span> <strong id="nextBirthdayDays"></strong></div>
+                    <div class="stat-line"><span id="labelNextHours">Hours</span> <strong id="nextBirthdayHours"></strong></div>
+                    <div class="stat-line"><span id="labelNextMinutes">Minutes</span> <strong id="nextBirthdayMinutes"></strong></div>
+                    <div class="stat-line"><span id="labelNextSeconds">Seconds</span> <strong id="nextBirthdaySeconds"></strong></div>
+                    <div class="stat-line"><span id="labelBornDay">Born On</span> <strong id="bornWeekday"></strong></div>
+                </div>
+            </div>
+
             <div id="motivationalQuote" class="motivational-quote">
                 <p id="actualQuoteText"></p>
                 <div class="quote-actions">
@@ -507,19 +1040,36 @@
                     <button id="shareButton" onclick="shareQuote()">Share</button>
                 </div>
             </div>
-            <div class="copyright" id="copyrightText">
-                copyright © by <a href="https://www.mahsua.com" target="_blank">MAHSUA</a>
-            </div>
+        </div>
+
+        <div class="copyright" id="copyrightText">
+            Made With ❤️ INDIA ~ Designed by <a href="https://proshivamkushwaha.mahsua.com" target="_blank">SHIVAM KUSHWAHA</a> | © <a href="https://www.mahsua.com" target="_blank">MAHSUA</a>
         </div>
     </div>
 
     <div id="messageBox" class="message-box"></div>
 
     <script>
-        // Get elements from the DOM
+        const STORAGE_PROFILES_KEY = 'mahsua_age_tracked_profiles_v1';
+
+        const dobDayInput = document.getElementById('dobDayInput');
+        const dobMonthInput = document.getElementById('dobMonthInput');
+        const dobYearInput = document.getElementById('dobYearInput');
+        const dobDaySelect = document.getElementById('dobDaySelect');
+        const dobMonthSelect = document.getElementById('dobMonthSelect');
+        const dobYearSelect = document.getElementById('dobYearSelect');
         const birthdateInput = document.getElementById('birthdate');
+        const birthdateSelectMirror = document.getElementById('birthdateSelectMirror');
         const currentDateInput = document.getElementById('currentDate');
         const resultsDiv = document.getElementById('results');
+        const liveBadge = document.getElementById('liveBadge');
+        const dobPreviewText = document.getElementById('dobPreviewText');
+        const clearDobBtn = document.getElementById('clearDobBtn');
+        const saveDrawer = document.getElementById('saveDrawer');
+        const profileNameInput = document.getElementById('profileNameInput');
+        const trackedSection = document.getElementById('trackedSection');
+        const trackedList = document.getElementById('trackedList');
+
         const ageYearsMonthsDaysSpan = document.getElementById('ageYearsMonthsDays');
         const totalDaysSpan = document.getElementById('totalDays');
         const totalWeeksSpan = document.getElementById('totalWeeks');
@@ -530,171 +1080,664 @@
         const nextBirthdayHoursSpan = document.getElementById('nextBirthdayHours');
         const nextBirthdayMinutesSpan = document.getElementById('nextBirthdayMinutes');
         const nextBirthdaySecondsSpan = document.getElementById('nextBirthdaySeconds');
+        const bornWeekdaySpan = document.getElementById('bornWeekday');
         const happyBirthdayMessageDiv = document.getElementById('happyBirthdayMessage');
         const messageBox = document.getElementById('messageBox');
         const actualQuoteTextSpan = document.getElementById('actualQuoteText');
-        const modeToggleBtn = document.getElementById('modeToggleBtn');
+
         const modeIcon = document.getElementById('modeIcon');
         const modeText = document.getElementById('modeText');
         const langEnBtn = document.getElementById('langEnBtn');
         const langHiBtn = document.getElementById('langHiBtn');
-        const copyrightTextElement = document.getElementById('copyrightText');
-        const shareButton = document.getElementById('shareButton');
 
-        // All static text content for localization
+        let currentMode = localStorage.getItem('displayMode') || 'light';
+        let currentLanguage = localStorage.getItem('displayLanguage') || 'en';
+        let entryMode = 'type';
+        let liveTimerId = null;
+
+        const monthNames = {
+            en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            hi: ['जनवरी', 'फ़रवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर']
+        };
+
+        const weekdayNames = {
+            en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+            hi: ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार']
+        };
+
         const languageContent = {
             en: {
                 appTitle: "Age Calculator - Mahsua Apps",
+                homeText: "Mahsua Apps",
                 mainTitle: "Age Calculator",
-                birthdateLabel: "Your Birthdate:",
-                currentDateLabel: "Calculate Age As Of (Optional, defaults to today):",
-                calculateButton: "Calculate Age",
-                exactAgePrefix: "Your exact age is:",
-                labelYears: "years", 
-                labelMonths: "months", 
-                totalTimeLived: "Total time lived:",
-                labelDays: "Days:",
-                labelWeeks: "Weeks:",
-                labelHours: "Hours:",
-                labelMinutes: "Minutes:",
-                labelSeconds: "Seconds:",
-                timeUntilNextBirthday: "Time until your next birthday:",
-                labelNextDays: "Days:",
-                labelNextHours: "Hours:",
-                labelNextMinutes: "Minutes:",
-                labelNextSeconds: "Seconds:",
+                mainSubtitle: "Fast DOB entry & live age tracking",
+                birthdateLabel: "🎂 Date of Birth",
+                modeTypeBtn: "Type DD/MM/YYYY",
+                modeSelectBtn: "Select Lists",
+                dayLabel: "Day",
+                monthLabel: "Month",
+                yearLabel: "Year",
+                quickYearLabel: "Quick decade:",
+                previewPlaceholder: "Enter day, month, and 4-digit year",
+                selectedPrefix: "Selected:",
+                clearBtn: "Clear",
+                currentDateLabel: "Track Age As Of (Today by default):",
+                calculateButton: "Calculate & Track Age",
+                openSaveBtn: "📌 Save DOB",
+                namePlaceholder: "Name (e.g., Me, Mom, Alex)",
+                confirmSaveBtn: "Save",
+                trackedTitle: "📌 Tracked Birthdays",
+                exactAgePrefix: "Your exact age is",
+                liveText: "LIVE",
+                labelYears: "years",
+                labelMonths: "months",
+                labelDaysUnit: "days",
+                andWord: "and",
+                totalTimeLived: "Total Time Lived",
+                labelDays: "Days",
+                labelWeeks: "Weeks",
+                labelHours: "Hours",
+                labelMinutes: "Minutes",
+                labelSeconds: "Seconds",
+                timeUntilNextBirthday: "Next Birthday",
+                labelBornDay: "Born On",
                 happyBirthday: "🥳 Happy Birthday! 🥳",
                 copyButton: "Copy",
                 shareButton: "Share",
                 darkModeBtnText: "Dark Mode",
                 lightModeBtnText: "Light Mode",
-                enterBirthdate: "Please enter your birthdate.",
+                enterBirthdate: "Please enter a valid complete birthdate (DD/MM/YYYY).",
+                invalidCalendarDate: "That date does not exist on the calendar.",
                 birthdateInFuture: "Birthdate cannot be in the future!",
+                enterProfileName: "Please enter a name to save this DOB.",
+                profileSaved: "DOB saved to your tracker!",
                 quoteCopied: "Quote copied to clipboard!",
                 failedToCopy: "Failed to copy quote.",
                 quoteShared: "Quote shared successfully!",
                 failedToShare: "Failed to share quote.",
-                webShareNotSupported: "Web Share API is not supported in this browser.",
-                copyright: 'copyright © by <a href="https://www.mahsua.com" target="_blank">MAHSUA</a>'
+                webShareNotSupported: "Web Share not supported — copied instead!",
+                todayLabel: "Today! 🎂",
+                daysLeftSuffix: "d left",
+                yearsShort: "yrs"
             },
             hi: {
                 appTitle: "आयु कैलकुलेटर - महसुआ ऐप्स",
+                homeText: "महसुआ ऐप्स",
                 mainTitle: "आयु कैलकुलेटर",
-                birthdateLabel: "आपकी जन्मतिथि:",
-                currentDateLabel: "आयु की गणना इस तिथि तक करें (वैकल्पिक, आज की डिफ़ॉल्ट):",
-                calculateButton: "आयु की गणना करें",
-                exactAgePrefix: "आपकी सटीक आयु है:",
-                labelYears: "साल", 
-                labelMonths: "महीने", 
-                totalTimeLived: "कुल व्यतीत समय:",
-                labelDays: "दिन:",
-                labelWeeks: "सप्ताह:",
-                labelHours: "घंटे:",
-                labelMinutes: "मिनट:",
-                labelSeconds: "सेकंड:",
-                timeUntilNextBirthday: "आपके अगले जन्मदिन तक का समय:",
-                labelNextDays: "दिन:",
-                labelNextHours: "घंटे:",
-                labelNextMinutes: "मिनट:",
-                labelNextSeconds: "सेकंड:",
+                mainSubtitle: "आसान जन्मतिथि एंट्री और लाइव ट्रैकिंग",
+                birthdateLabel: "🎂 जन्मतिथि",
+                modeTypeBtn: "DD/MM/YYYY लिखें",
+                modeSelectBtn: "सूची से चुनें",
+                dayLabel: "दिन",
+                monthLabel: "महीना",
+                yearLabel: "साल",
+                quickYearLabel: "दशक चुनें:",
+                previewPlaceholder: "दिन, महीना और 4 अंकों का साल दर्ज करें",
+                selectedPrefix: "चयनित:",
+                clearBtn: "साफ़ करें",
+                currentDateLabel: "इस तिथि तक आयु ट्रैक करें (डिफ़ॉल्ट आज):",
+                calculateButton: "आयु की गणना और ट्रैक करें",
+                openSaveBtn: "📌 सेव करें",
+                namePlaceholder: "नाम (जैसे: मैं, माँ, राज)",
+                confirmSaveBtn: "सेव",
+                trackedTitle: "📌 सहेजे गए जन्मदिन",
+                exactAgePrefix: "आपकी सटीक आयु है",
+                liveText: "लाइव",
+                labelYears: "साल",
+                labelMonths: "महीने",
+                labelDaysUnit: "दिन",
+                andWord: "और",
+                totalTimeLived: "कुल व्यतीत समय",
+                labelDays: "दिन",
+                labelWeeks: "सप्ताह",
+                labelHours: "घंटे",
+                labelMinutes: "मिनट",
+                labelSeconds: "सेकंड",
+                timeUntilNextBirthday: "अगला जन्मदिन",
+                labelBornDay: "जन्म का दिन",
                 happyBirthday: "🥳 जन्मदिन मुबारक हो! 🥳",
                 copyButton: "कॉपी करें",
                 shareButton: "शेयर करें",
                 darkModeBtnText: "डार्क मोड",
                 lightModeBtnText: "लाइट मोड",
-                enterBirthdate: "कृपया अपनी जन्मतिथि दर्ज करें।",
+                enterBirthdate: "कृपया सही और पूरी जन्मतिथि (DD/MM/YYYY) दर्ज करें।",
+                invalidCalendarDate: "यह तिथि कैलेंडर में मौजूद नहीं है।",
                 birthdateInFuture: "जन्मतिथि भविष्य की नहीं हो सकती!",
+                enterProfileName: "कृपया इस जन्मतिथि को सेव करने के लिए नाम लिखें।",
+                profileSaved: "जन्मतिथि ट्रैकर में सेव हो गई!",
                 quoteCopied: "उद्धरण क्लिपबोर्ड पर कॉपी किया गया!",
-                failedToCopy: "उद्धरण कॉपी करने में विफल रहा।",
+                failedToCopy: "कॉपी करने में विफल रहा।",
                 quoteShared: "उद्धरण सफलतापूर्वक साझा किया गया!",
-                failedToShare: "उद्धरण साझा करने में विफल रहा।",
-                webShareNotSupported: "वेब शेयर एपीआई इस ब्राउज़र में समर्थित नहीं है।",
-                copyright: 'कॉपीराइट © द्वारा <a href="https://www.mahsua.com" target="_blank">MAHSUA</a>'
+                failedToShare: "साझा करने में विफल रहा।",
+                webShareNotSupported: "वेब शेयर समर्थित नहीं है — कॉपी किया गया!",
+                todayLabel: "आज! 🎂",
+                daysLeftSuffix: "दिन बाकी",
+                yearsShort: "साल"
             }
         };
 
-        // Array of motivational messages in English and Hindi
         const motivationalMessages = [
             { en: "Time is more valuable than money. You can get more money, but not more time.", hi: "समय पैसे से अधिक मूल्यवान है। आप पैसे कमा सकते हैं, लेकिन समय नहीं।" },
-            { en: "Live each day as if your life has just begun.", hi: "हर दिन ऐसे जियो जैसे आपकी ज़िंदगी अभी शुरू हुई हो." },
-            { en: "Your life is your message to the world. Make it inspiring.", hi: "आपका जीवन ही आपकी दुनिया के लिए संदेश है। इसे प्रेरणादायक बनाएं." },
-            { en: "Lost time is never found again. Use it wisely.", hi: "खोया हुआ समय कभी वापस नहीं आता। इसका समझदारी से उपयोग करें." },
-            { en: "Don’t spend your life, invest it.", hi: "अपना जीवन खर्च मत करो, उसमें निवेश करो." },
-            { en: "Life is not measured by time, but by the moments that take your breath away.", hi: "जीवन समय से नहीं, बल्कि उन पलों से मापा जाता है जो आपको चकित कर देते हैं." },
-            { en: "Time slips away silently. Do something today that your future self will thank you for.", hi: "समय चुपचाप निकल जाता है। आज कुछ ऐसा करो, जिसके लिए भविष्य में खुद को धन्यवाद दो." },
-            { en: "Make time for what truly matters in your life. The rest can wait.", hi: "अपने जीवन में जो वास्तव में मायने रखता है उसके लिए समय निकालो। बाकी सब इंतजार कर सकता है." },
-            { en: "Don't let yesterday use up too much of today.", hi: "बीते कल को आज का ज्यादा हिस्सा बर्बाद न करने दें." },
-            { en: "Life gives you seconds, you choose how to turn them into meaning.", hi: "जीवन आपको सेकंड देता है, आप तय करते हैं कि उसे कैसे सार्थक बनाना है." }
+            { en: "Live each day as if your life has just begun.", hi: "हर दिन ऐसे जियो जैसे आपकी ज़िंदगी अभी शुरू हुई हो।" },
+            { en: "Your life is your message to the world. Make it inspiring.", hi: "आपका जीवन ही दुनिया के लिए संदेश है। इसे प्रेरणादायक बनाएं।" },
+            { en: "Lost time is never found again. Use it wisely.", hi: "खोया हुआ समय कभी वापस नहीं आता। इसका समझदारी से उपयोग करें।" },
+            { en: "Don’t spend your life, invest it.", hi: "अपना जीवन खर्च मत करो, उसमें निवेश करो।" },
+            { en: "Life is not measured by time, but by the moments that take your breath away.", hi: "जीवन समय से नहीं, बल्कि उन पलों से मापा जाता है जो आपको चकित कर देते हैं।" },
+            { en: "Time slips away silently. Do something today that your future self will thank you for.", hi: "समय चुपचाप निकल जाता है। आज कुछ ऐसा करो, जिसके लिए भविष्य में खुद को धन्यवाद दो।" },
+            { en: "Make time for what truly matters in your life. The rest can wait.", hi: "अपने जीवन में जो वास्तव में मायने रखता है उसके लिए समय निकालो। बाकी सब इंतजार कर सकता है।" },
+            { en: "Don't let yesterday use up too much of today.", hi: "बीते कल को आज का ज्यादा हिस्सा बर्बाद न करने दें।" },
+            { en: "Life gives you seconds, you choose how to turn them into meaning.", hi: "जीवन आपको सेकंड देता है, आप तय करते हैं कि उसे कैसे सार्थक बनाना है।" }
         ];
 
-        let currentMode = localStorage.getItem('displayMode') || 'light';
-        let currentLanguage = localStorage.getItem('displayLanguage') || 'en';
+        function pad2(n) {
+            return String(n).padStart(2, '0');
+        }
+
+        function getLocalTodayStr() {
+            const now = new Date();
+            return `${now.getFullYear()}-${pad2(now.getMonth() + 1)}-${pad2(now.getDate())}`;
+        }
+
+        function isValidCalendarDate(y, m, d) {
+            if (!Number.isInteger(y) || !Number.isInteger(m) || !Number.isInteger(d)) return false;
+            if (y < 1900 || y > new Date().getFullYear() || m < 1 || m > 12 || d < 1 || d > 31) return false;
+            const dt = new Date(y, m - 1, d);
+            return dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d;
+        }
+
+        function populateSelectOptions() {
+            const lang = languageContent[currentLanguage];
+            const currentYear = new Date().getFullYear();
+
+            const prevDay = dobDaySelect.value;
+            const prevMonth = dobMonthSelect.value;
+            const prevYear = dobYearSelect.value;
+
+            dobDaySelect.innerHTML = `<option value="">-- ${lang.dayLabel} --</option>`;
+            for (let d = 1; d <= 31; d++) {
+                dobDaySelect.innerHTML += `<option value="${d}">${pad2(d)}</option>`;
+            }
+
+            dobMonthSelect.innerHTML = `<option value="">-- ${lang.monthLabel} --</option>`;
+            monthNames[currentLanguage].forEach((name, idx) => {
+                dobMonthSelect.innerHTML += `<option value="${idx + 1}">${pad2(idx + 1)} - ${name}</option>`;
+            });
+
+            dobYearSelect.innerHTML = `<option value="">-- ${lang.yearLabel} --</option>`;
+            for (let y = currentYear; y >= 1900; y--) {
+                dobYearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+            }
+
+            if (prevDay) dobDaySelect.value = prevDay;
+            if (prevMonth) dobMonthSelect.value = prevMonth;
+            if (prevYear) dobYearSelect.value = prevYear;
+        }
+
+        function switchEntryMode(mode) {
+            entryMode = mode;
+            document.getElementById('modeTypeBtn').classList.toggle('active', mode === 'type');
+            document.getElementById('modeSelectBtn').classList.toggle('active', mode === 'select');
+            document.getElementById('typeEntryRow').classList.toggle('hidden', mode !== 'type');
+            document.getElementById('selectEntryRow').classList.toggle('hidden', mode !== 'select');
+        }
+
+        function syncAllDobInputs(y, m, d, source) {
+            const yStr = y ? String(y) : '';
+            const mStr = m ? String(m) : '';
+            const dStr = d ? String(d) : '';
+
+            if (source !== 'type') {
+                dobDayInput.value = d ? pad2(d) : '';
+                dobMonthInput.value = m ? pad2(m) : '';
+                dobYearInput.value = yStr;
+            }
+            if (source !== 'select') {
+                dobDaySelect.value = dStr;
+                dobMonthSelect.value = mStr;
+                dobYearSelect.value = yStr;
+            }
+
+            if (y && m && d && isValidCalendarDate(y, m, d)) {
+                const iso = `${y}-${pad2(m)}-${pad2(d)}`;
+                birthdateInput.value = iso;
+                birthdateSelectMirror.value = iso;
+            } else {
+                birthdateInput.value = '';
+                birthdateSelectMirror.value = '';
+            }
+            updateDobPreview();
+        }
+
+        function getCurrentDobParts() {
+            if (entryMode === 'type') {
+                const d = parseInt(dobDayInput.value, 10);
+                const m = parseInt(dobMonthInput.value, 10);
+                const y = parseInt(dobYearInput.value, 10);
+                return { y, m, d };
+            } else {
+                const d = parseInt(dobDaySelect.value, 10);
+                const m = parseInt(dobMonthSelect.value, 10);
+                const y = parseInt(dobYearSelect.value, 10);
+                return { y, m, d };
+            }
+        }
+
+        function updateDobPreview() {
+            const { y, m, d } = getCurrentDobParts();
+            const lang = languageContent[currentLanguage];
+            const hasAny = dobDayInput.value || dobMonthInput.value || dobYearInput.value || dobDaySelect.value || dobMonthSelect.value || dobYearSelect.value;
+            clearDobBtn.classList.toggle('hidden', !hasAny);
+
+            if (y && m && d && String(y).length === 4) {
+                if (!isValidCalendarDate(y, m, d)) {
+                    dobPreviewText.innerHTML = `<span style="color:#ef4444">${lang.invalidCalendarDate}</span>`;
+                    return;
+                }
+                const dt = new Date(y, m - 1, d);
+                const dayName = weekdayNames[currentLanguage][dt.getDay()];
+                const monthName = monthNames[currentLanguage][m - 1];
+                dobPreviewText.innerHTML = `${lang.selectedPrefix} <strong>${pad2(d)} ${monthName} ${y} (${dayName})</strong>`;
+            } else {
+                dobPreviewText.textContent = lang.previewPlaceholder;
+            }
+        }
+
+        function jumpDecade(decadeStart) {
+            const targetYear = Math.min(decadeStart + 5, new Date().getFullYear());
+            if (entryMode === 'type') {
+                dobYearInput.value = String(targetYear);
+                dobYearInput.focus();
+                dobYearInput.select();
+                const d = parseInt(dobDayInput.value, 10);
+                const m = parseInt(dobMonthInput.value, 10);
+                syncAllDobInputs(targetYear, m || null, d || null, 'type');
+            } else {
+                dobYearSelect.value = String(targetYear);
+                const d = parseInt(dobDaySelect.value, 10);
+                const m = parseInt(dobMonthSelect.value, 10);
+                syncAllDobInputs(targetYear, m || null, d || null, 'select');
+                dobYearSelect.focus();
+            }
+        }
+
+        function clearDob() {
+            stopLiveTimer();
+            dobDayInput.value = '';
+            dobMonthInput.value = '';
+            dobYearInput.value = '';
+            dobDaySelect.value = '';
+            dobMonthSelect.value = '';
+            dobYearSelect.value = '';
+            birthdateInput.value = '';
+            birthdateSelectMirror.value = '';
+            resultsDiv.classList.add('hidden');
+            saveDrawer.classList.add('hidden');
+            updateDobPreview();
+        }
+
+        // Auto-advance & sync for numeric inputs
+        function setupNumericField(inputEl, maxLen, nextEl, maxVal) {
+            inputEl.addEventListener('input', () => {
+                inputEl.value = inputEl.value.replace(/\D/g, '').slice(0, maxLen);
+                const val = parseInt(inputEl.value, 10);
+                if (maxLen === 2 && inputEl.value.length === 2) {
+                    if (val > maxVal) inputEl.value = String(maxVal);
+                    if (nextEl) nextEl.focus();
+                } else if (maxLen === 2 && inputEl.value.length === 1 && val > Math.floor(maxVal / 10)) {
+                    // e.g. typing "4" in Day or "2" in Month automatically pads & advances
+                    inputEl.value = pad2(val);
+                    if (nextEl) nextEl.focus();
+                }
+                const d = parseInt(dobDayInput.value, 10);
+                const m = parseInt(dobMonthInput.value, 10);
+                const y = dobYearInput.value.length === 4 ? parseInt(dobYearInput.value, 10) : null;
+                syncAllDobInputs(y, m || null, d || null, 'type');
+            });
+
+            inputEl.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') calculateAge(true);
+            });
+        }
+
+        setupNumericField(dobDayInput, 2, dobMonthInput, 31);
+        setupNumericField(dobMonthInput, 2, dobYearInput, 12);
+        setupNumericField(dobYearInput, 4, null, new Date().getFullYear());
+
+        [dobDaySelect, dobMonthSelect, dobYearSelect].forEach(sel => {
+            sel.addEventListener('change', () => {
+                const d = parseInt(dobDaySelect.value, 10);
+                const m = parseInt(dobMonthSelect.value, 10);
+                const y = parseInt(dobYearSelect.value, 10);
+                syncAllDobInputs(y || null, m || null, d || null, 'select');
+            });
+        });
+
+        [birthdateInput, birthdateSelectMirror].forEach(picker => {
+            picker.addEventListener('change', () => {
+                if (!picker.value) return;
+                const [y, m, d] = picker.value.split('-').map(Number);
+                syncAllDobInputs(y, m, d, 'picker');
+                calculateAge(true);
+            });
+        });
+
+        currentDateInput.addEventListener('change', () => {
+            if (!resultsDiv.classList.contains('hidden')) {
+                calculateAge(false);
+            }
+        });
+
+        function stopLiveTimer() {
+            if (liveTimerId) {
+                clearInterval(liveTimerId);
+                liveTimerId = null;
+            }
+        }
+
+        function calculateAge(refreshQuote = false) {
+            const lang = languageContent[currentLanguage];
+            const { y, m, d } = getCurrentDobParts();
+
+            if (!y || !m || !d || String(y).length !== 4) {
+                displayMessage(lang.enterBirthdate, 'error');
+                resultsDiv.classList.add('hidden');
+                stopLiveTimer();
+                return;
+            }
+
+            if (!isValidCalendarDate(y, m, d)) {
+                displayMessage(lang.invalidCalendarDate, 'error');
+                resultsDiv.classList.add('hidden');
+                stopLiveTimer();
+                return;
+            }
+
+            const birthdate = new Date(y, m - 1, d, 0, 0, 0, 0);
+            const todayStr = getLocalTodayStr();
+            const asOfStr = currentDateInput.value || todayStr;
+            const isLiveToday = (asOfStr === todayStr);
+
+            const [ay, am, ad] = asOfStr.split('-').map(Number);
+            const compareDayOnly = new Date(ay, am - 1, ad, 0, 0, 0, 0);
+
+            if (birthdate > compareDayOnly) {
+                displayMessage(lang.birthdateInFuture, 'error');
+                resultsDiv.classList.add('hidden');
+                stopLiveTimer();
+                return;
+            }
+
+            const renderTick = () => {
+                const now = new Date();
+                const refTime = isLiveToday ? now : new Date(ay, am - 1, ad, 0, 0, 0, 0);
+
+                let years = refTime.getFullYear() - birthdate.getFullYear();
+                let months = refTime.getMonth() - birthdate.getMonth();
+                let days = refTime.getDate() - birthdate.getDate();
+
+                if (days < 0) {
+                    months--;
+                    const prevMonth = new Date(refTime.getFullYear(), refTime.getMonth(), 0);
+                    days += prevMonth.getDate();
+                }
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+
+                ageYearsMonthsDaysSpan.textContent =
+                    `${years} ${lang.labelYears}, ${months} ${lang.labelMonths} ${lang.andWord} ${days} ${lang.labelDaysUnit}`;
+
+                const diffMs = Math.max(0, refTime.getTime() - birthdate.getTime());
+                const totalSeconds = Math.floor(diffMs / 1000);
+                const totalMinutes = Math.floor(totalSeconds / 60);
+                const totalHours = Math.floor(totalMinutes / 60);
+                const totalDays = Math.floor(totalHours / 24);
+                const totalWeeks = Math.floor(totalDays / 7);
+
+                totalDaysSpan.textContent = totalDays.toLocaleString();
+                totalWeeksSpan.textContent = totalWeeks.toLocaleString();
+                totalHoursSpan.textContent = totalHours.toLocaleString();
+                totalMinutesSpan.textContent = totalMinutes.toLocaleString();
+                totalSecondsSpan.textContent = totalSeconds.toLocaleString();
+                bornWeekdaySpan.textContent = weekdayNames[currentLanguage][birthdate.getDay()];
+
+                const isBirthdayToday = (birthdate.getMonth() === refTime.getMonth() && birthdate.getDate() === refTime.getDate());
+                if (isBirthdayToday) {
+                    happyBirthdayMessageDiv.classList.remove('hidden');
+                    nextBirthdayDaysSpan.textContent = '0';
+                    nextBirthdayHoursSpan.textContent = '0';
+                    nextBirthdayMinutesSpan.textContent = '0';
+                    nextBirthdaySecondsSpan.textContent = '0';
+                } else {
+                    happyBirthdayMessageDiv.classList.add('hidden');
+                    let nextYear = refTime.getFullYear();
+                    let nextBirthday = new Date(nextYear, m - 1, d, 0, 0, 0, 0);
+                    // Handle Feb 29 in non-leap years -> Mar 1
+                    if (m === 2 && d === 29 && nextBirthday.getMonth() !== 1) {
+                        nextBirthday = new Date(nextYear, 2, 1, 0, 0, 0, 0);
+                    }
+                    if (nextBirthday <= refTime) {
+                        nextYear++;
+                        nextBirthday = new Date(nextYear, m - 1, d, 0, 0, 0, 0);
+                        if (m === 2 && d === 29 && nextBirthday.getMonth() !== 1) {
+                            nextBirthday = new Date(nextYear, 2, 1, 0, 0, 0, 0);
+                        }
+                    }
+
+                    const msLeft = Math.max(0, nextBirthday.getTime() - refTime.getTime());
+                    const secLeft = Math.floor(msLeft / 1000);
+                    const minLeft = Math.floor(secLeft / 60);
+                    const hrLeft = Math.floor(minLeft / 60);
+                    const daysLeft = Math.floor(hrLeft / 24);
+
+                    nextBirthdayDaysSpan.textContent = daysLeft.toLocaleString();
+                    nextBirthdayHoursSpan.textContent = hrLeft % 24;
+                    nextBirthdayMinutesSpan.textContent = minLeft % 60;
+                    nextBirthdaySecondsSpan.textContent = secLeft % 60;
+                }
+            };
+
+            stopLiveTimer();
+            renderTick();
+            liveBadge.classList.toggle('hidden', !isLiveToday);
+            if (isLiveToday) {
+                liveTimerId = setInterval(renderTick, 1000);
+            }
+
+            resultsDiv.classList.remove('hidden');
+            if (refreshQuote) {
+                displayRandomMotivationalMessage();
+            }
+        }
+
+        // Saved DOB Tracker (localStorage)
+        function getSavedProfiles() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_PROFILES_KEY) || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function setSavedProfiles(profiles) {
+            localStorage.setItem(STORAGE_PROFILES_KEY, JSON.stringify(profiles));
+        }
+
+        function toggleSaveDrawer() {
+            const { y, m, d } = getCurrentDobParts();
+            const lang = languageContent[currentLanguage];
+            if (!y || !m || !d || !isValidCalendarDate(y, m, d)) {
+                displayMessage(lang.enterBirthdate, 'error');
+                return;
+            }
+            saveDrawer.classList.toggle('hidden');
+            if (!saveDrawer.classList.contains('hidden')) {
+                profileNameInput.focus();
+            }
+        }
+
+        function saveTrackedProfile() {
+            const lang = languageContent[currentLanguage];
+            const name = profileNameInput.value.trim();
+            if (!name) {
+                displayMessage(lang.enterProfileName, 'error');
+                return;
+            }
+            const { y, m, d } = getCurrentDobParts();
+            if (!isValidCalendarDate(y, m, d)) {
+                displayMessage(lang.enterBirthdate, 'error');
+                return;
+            }
+            const dobIso = `${y}-${pad2(m)}-${pad2(d)}`;
+            const profiles = getSavedProfiles();
+            profiles.unshift({ id: Date.now(), name, dob: dobIso });
+            setSavedProfiles(profiles);
+            profileNameInput.value = '';
+            saveDrawer.classList.add('hidden');
+            renderTrackedProfiles();
+            displayMessage(lang.profileSaved);
+        }
+
+        function deleteTrackedProfile(id, event) {
+            event.stopPropagation();
+            const profiles = getSavedProfiles().filter(p => p.id !== id);
+            setSavedProfiles(profiles);
+            renderTrackedProfiles();
+        }
+
+        function loadTrackedProfile(dobIso) {
+            const [y, m, d] = dobIso.split('-').map(Number);
+            syncAllDobInputs(y, m, d, 'tracker');
+            calculateAge(true);
+        }
+
+        function getQuickSummaryForDob(dobIso) {
+            const [y, m, d] = dobIso.split('-').map(Number);
+            const now = new Date();
+            const birth = new Date(y, m - 1, d);
+            let age = now.getFullYear() - birth.getFullYear();
+            if (now.getMonth() < birth.getMonth() || (now.getMonth() === birth.getMonth() && now.getDate() < birth.getDate())) {
+                age--;
+            }
+            const lang = languageContent[currentLanguage];
+            if (now.getMonth() === birth.getMonth() && now.getDate() === birth.getDate()) {
+                return `${age} ${lang.yearsShort} • ${lang.todayLabel}`;
+            }
+            let nextB = new Date(now.getFullYear(), m - 1, d);
+            if (nextB < new Date(now.getFullYear(), now.getMonth(), now.getDate())) {
+                nextB.setFullYear(now.getFullYear() + 1);
+            }
+            const daysLeft = Math.ceil((nextB - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / (1000 * 60 * 60 * 24));
+            return `${age} ${lang.yearsShort} • ${daysLeft}${lang.daysLeftSuffix}`;
+        }
+
+        function renderTrackedProfiles() {
+            const profiles = getSavedProfiles();
+            trackedSection.classList.toggle('hidden', profiles.length === 0);
+            trackedList.innerHTML = '';
+            profiles.forEach(p => {
+                const [y, m, d] = p.dob.split('-').map(Number);
+                const formatted = `${pad2(d)} ${monthNames[currentLanguage][m - 1]} ${y}`;
+                const item = document.createElement('div');
+                item.className = 'tracked-item';
+                item.onclick = () => loadTrackedProfile(p.dob);
+                item.innerHTML = `
+                    <div class="tracked-info">
+                        <div class="tracked-name">${escapeHtml(p.name)}</div>
+                        <div class="tracked-meta">${formatted}</div>
+                    </div>
+                    <div class="tracked-actions">
+                        <span class="tracked-badge">${getQuickSummaryForDob(p.dob)}</span>
+                        <button type="button" class="delete-track-btn" title="Remove" onclick="deleteTrackedProfile(${p.id}, event)">✕</button>
+                    </div>
+                `;
+                trackedList.appendChild(item);
+            });
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+        }
 
         function toggleDarkMode() {
-            if (currentMode === 'light') {
-                document.body.setAttribute('data-mode', 'dark');
-                modeIcon.textContent = '☀️';
-                modeText.textContent = languageContent[currentLanguage].lightModeBtnText;
-                currentMode = 'dark';
-            } else {
-                document.body.setAttribute('data-mode', 'light');
-                modeIcon.textContent = '🌙';
-                modeText.textContent = languageContent[currentLanguage].darkModeBtnText;
-                currentMode = 'light';
-            }
+            currentMode = currentMode === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-mode', currentMode);
             localStorage.setItem('displayMode', currentMode);
+            updateModeButtonText();
+        }
+
+        function updateModeButtonText() {
+            const lang = languageContent[currentLanguage];
+            if (currentMode === 'dark') {
+                modeIcon.textContent = '☀️';
+                modeText.textContent = lang.lightModeBtnText;
+            } else {
+                modeIcon.textContent = '🌙';
+                modeText.textContent = lang.darkModeBtnText;
+            }
         }
 
         function setLanguage(lang) {
             currentLanguage = lang;
             localStorage.setItem('displayLanguage', lang);
-            updateLanguageButtons(lang);
+            langEnBtn.classList.toggle('active', lang === 'en');
+            langHiBtn.classList.toggle('active', lang === 'hi');
 
-            document.title = languageContent[lang].appTitle;
-            document.getElementById('mainTitle').textContent = languageContent[lang].mainTitle;
-            document.getElementById('birthdateLabel').textContent = languageContent[lang].birthdateLabel;
-            document.getElementById('currentDateLabel').textContent = languageContent[lang].currentDateLabel;
-            document.getElementById('calculateButton').textContent = languageContent[lang].calculateButton;
-            
-            const exactAgePrefixElement = document.getElementById('exactAgePrefix');
-            exactAgePrefixElement.childNodes[0].nodeValue = languageContent[lang].exactAgePrefix + ' ';
-            
-            document.getElementById('totalTimeLived').textContent = languageContent[lang].totalTimeLived;
-            document.getElementById('labelDays').textContent = languageContent[lang].labelDays;
-            document.getElementById('labelWeeks').textContent = languageContent[lang].labelWeeks;
-            document.getElementById('labelHours').textContent = languageContent[lang].labelHours;
-            document.getElementById('labelMinutes').textContent = languageContent[lang].labelMinutes;
-            document.getElementById('labelSeconds').textContent = languageContent[lang].labelSeconds;
-            document.getElementById('timeUntilNextBirthday').textContent = languageContent[lang].timeUntilNextBirthday;
-            document.getElementById('labelNextDays').textContent = languageContent[lang].labelNextDays;
-            document.getElementById('labelNextHours').textContent = languageContent[lang].labelNextHours;
-            document.getElementById('labelNextMinutes').textContent = languageContent[lang].labelNextMinutes;
-            document.getElementById('labelNextSeconds').textContent = languageContent[lang].labelNextSeconds;
-            document.getElementById('happyBirthdayMessage').innerHTML = languageContent[lang].happyBirthday;
-            document.getElementById('copyButton').textContent = languageContent[lang].copyButton;
-            if (shareButton) shareButton.textContent = languageContent[lang].shareButton;
-            copyrightTextElement.innerHTML = languageContent[lang].copyright;
+            const t = languageContent[lang];
+            document.title = t.appTitle;
+            document.getElementById('homeText').textContent = t.homeText;
+            document.getElementById('mainTitle').textContent = t.mainTitle;
+            document.getElementById('mainSubtitle').textContent = t.mainSubtitle;
+            document.getElementById('birthdateLabel').textContent = t.birthdateLabel;
+            document.getElementById('modeTypeBtn').textContent = t.modeTypeBtn;
+            document.getElementById('modeSelectBtn').textContent = t.modeSelectBtn;
+            document.getElementById('dayInputLabel').textContent = t.dayLabel;
+            document.getElementById('monthInputLabel').textContent = t.monthLabel;
+            document.getElementById('yearInputLabel').textContent = t.yearLabel;
+            document.getElementById('daySelectLabel').textContent = t.dayLabel;
+            document.getElementById('monthSelectLabel').textContent = t.monthLabel;
+            document.getElementById('yearSelectLabel').textContent = t.yearLabel;
+            document.getElementById('quickYearLabel').textContent = t.quickYearLabel;
+            clearDobBtn.textContent = t.clearBtn;
+            document.getElementById('currentDateLabel').textContent = t.currentDateLabel;
+            document.getElementById('calculateButton').textContent = t.calculateButton;
+            document.getElementById('openSaveBtn').textContent = t.openSaveBtn;
+            profileNameInput.placeholder = t.namePlaceholder;
+            document.getElementById('confirmSaveBtn').textContent = t.confirmSaveBtn;
+            document.getElementById('trackedTitle').textContent = t.trackedTitle;
+            document.getElementById('exactAgePrefix').textContent = t.exactAgePrefix;
+            document.getElementById('liveText').textContent = t.liveText;
+            document.getElementById('totalTimeLived').textContent = t.totalTimeLived;
+            document.getElementById('labelDays').textContent = t.labelDays;
+            document.getElementById('labelWeeks').textContent = t.labelWeeks;
+            document.getElementById('labelHours').textContent = t.labelHours;
+            document.getElementById('labelMinutes').textContent = t.labelMinutes;
+            document.getElementById('labelSeconds').textContent = t.labelSeconds;
+            document.getElementById('timeUntilNextBirthday').textContent = t.timeUntilNextBirthday;
+            document.getElementById('labelNextDays').textContent = t.labelDays;
+            document.getElementById('labelNextHours').textContent = t.labelHours;
+            document.getElementById('labelNextMinutes').textContent = t.labelMinutes;
+            document.getElementById('labelNextSeconds').textContent = t.labelSeconds;
+            document.getElementById('labelBornDay').textContent = t.labelBornDay;
+            happyBirthdayMessageDiv.textContent = t.happyBirthday;
+            document.getElementById('copyButton').textContent = t.copyButton;
+            document.getElementById('shareButton').textContent = t.shareButton;
 
-            if (currentMode === 'light') {
-                modeText.textContent = languageContent[lang].darkModeBtnText;
-            } else {
-                modeText.textContent = languageContent[lang].lightModeBtnText;
-            }
-
+            populateSelectOptions();
+            updateModeButtonText();
+            updateDobPreview();
+            renderTrackedProfiles();
             displayRandomMotivationalMessage();
-            if (!resultsDiv.classList.contains('hidden')) {
-                calculateAge();
-            }
-        }
 
-        function updateLanguageButtons(activeLang) {
-            langEnBtn.classList.toggle('active', activeLang === 'en');
-            langHiBtn.classList.toggle('active', activeLang === 'hi');
+            if (!resultsDiv.classList.contains('hidden')) {
+                calculateAge(false);
+            }
         }
 
         function displayRandomMotivationalMessage() {
-            const randomIndex = Math.floor(Math.random() * motivationalMessages.length);
-            actualQuoteTextSpan.textContent = motivationalMessages[randomIndex][currentLanguage];
+            const idx = Math.floor(Math.random() * motivationalMessages.length);
+            actualQuoteTextSpan.textContent = motivationalMessages[idx][currentLanguage];
         }
 
         function copyQuote() {
@@ -711,10 +1754,10 @@
             if (navigator.share) {
                 navigator.share({
                     title: languageContent[currentLanguage].appTitle,
-                    text: quote,
+                    text: quote
                 }).then(() => displayMessage(languageContent[currentLanguage].quoteShared))
-                .catch((error) => {
-                    if (error.name !== 'AbortError') {
+                .catch(err => {
+                    if (err.name !== 'AbortError') {
                         displayMessage(languageContent[currentLanguage].failedToShare, 'error');
                     }
                 });
@@ -724,105 +1767,23 @@
             }
         }
 
-        window.onload = function() {
-            const today = new Date();
-            currentDateInput.value = today.toISOString().split('T')[0];
-            resultsDiv.classList.add('hidden');
-            document.body.setAttribute('data-mode', currentMode);
-            setLanguage(currentLanguage);
-        };
-
         function displayMessage(message, type = 'success') {
             messageBox.textContent = message;
-            messageBox.className = 'message-box show';
-            if (type === 'error') {
-                messageBox.classList.add('error');
-            }
+            messageBox.className = 'message-box show' + (type === 'error' ? ' error' : '');
             setTimeout(() => {
                 messageBox.classList.remove('show');
             }, 3000);
         }
 
-        function calculateAge() {
-            const birthdateStr = birthdateInput.value;
-            const currentDateStr = currentDateInput.value;
-
-            if (!birthdateStr) {
-                displayMessage(languageContent[currentLanguage].enterBirthdate, 'error');
-                resultsDiv.classList.add('hidden');
-                return;
-            }
-
-            const birthdate = new Date(birthdateStr);
-            const currentDate = currentDateStr ? new Date(currentDateStr) : new Date();
-
-            if (birthdate > currentDate) {
-                displayMessage(languageContent[currentLanguage].birthdateInFuture, 'error');
-                resultsDiv.classList.add('hidden');
-                return;
-            }
-
-            let years = currentDate.getFullYear() - birthdate.getFullYear();
-            let months = currentDate.getMonth() - birthdate.getMonth();
-            let days = currentDate.getDate() - birthdate.getDate();
-
-            if (days < 0) {
-                months--;
-                const prevMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0);
-                days += prevMonth.getDate();
-            }
-
-            if (months < 0) {
-                years--;
-                months += 12;
-            }
-
-            ageYearsMonthsDaysSpan.textContent = `${years} ${languageContent[currentLanguage].labelYears}, ${months} ${languageContent[currentLanguage].labelMonths}, and ${days} ${languageContent[currentLanguage].labelDays.replace(':', '')}`;
-
-            const diffMilliseconds = currentDate.getTime() - birthdate.getTime();
-            const totalSeconds = Math.floor(diffMilliseconds / 1000);
-            const totalMinutes = Math.floor(totalSeconds / 60);
-            const totalHours = Math.floor(totalMinutes / 60);
-            const totalDays = Math.floor(totalHours / 24);
-            const totalWeeks = Math.floor(totalDays / 7);
-
-            totalDaysSpan.textContent = totalDays;
-            totalWeeksSpan.textContent = totalWeeks;
-            totalHoursSpan.textContent = totalHours;
-            totalMinutesSpan.textContent = totalMinutes;
-            totalSecondsSpan.textContent = totalSeconds;
-
-            let nextBirthday = new Date(currentDate.getFullYear(), birthdate.getMonth(), birthdate.getDate());
-
-            if (birthdate.getMonth() === currentDate.getMonth() && birthdate.getDate() === currentDate.getDate()) {
-                happyBirthdayMessageDiv.classList.remove('hidden');
-                nextBirthdayDaysSpan.textContent = '0';
-                nextBirthdayHoursSpan.textContent = '0';
-                nextBirthdayMinutesSpan.textContent = '0';
-                nextBirthdaySecondsSpan.textContent = '0';
-            } else {
-                happyBirthdayMessageDiv.classList.add('hidden');
-                if (nextBirthday < currentDate) {
-                    nextBirthday.setFullYear(currentDate.getFullYear() + 1);
-                }
-                const timeToNextBirthday = nextBirthday.getTime() - currentDate.getTime();
-                const nextBirthdayTotalSeconds = Math.floor(timeToNextBirthday / 1000);
-                const nextBirthdayTotalMinutes = Math.floor(nextBirthdayTotalSeconds / 60);
-                const nextBirthdayTotalHours = Math.floor(nextBirthdayTotalMinutes / 60);
-                const nextBirthdayTotalDays = Math.floor(nextBirthdayTotalHours / 24);
-                const remainingHours = nextBirthdayTotalHours % 24;
-                const remainingMinutes = nextBirthdayTotalMinutes % 60;
-                const remainingSeconds = nextBirthdayTotalSeconds % 60;
-
-                nextBirthdayDaysSpan.textContent = nextBirthdayTotalDays;
-                nextBirthdayHoursSpan.textContent = remainingHours;
-                nextBirthdayMinutesSpan.textContent = remainingMinutes;
-                nextBirthdaySecondsSpan.textContent = remainingSeconds;
-            }
-
-            resultsDiv.classList.remove('hidden');
-            displayRandomMotivationalMessage();
-        }
+        window.onload = function() {
+            const today = getLocalTodayStr();
+            currentDateInput.value = today;
+            birthdateInput.max = today;
+            birthdateSelectMirror.max = today;
+            document.body.setAttribute('data-mode', currentMode);
+            setLanguage(currentLanguage);
+            resultsDiv.classList.add('hidden');
+        };
     </script>
 </body>
 </html>
